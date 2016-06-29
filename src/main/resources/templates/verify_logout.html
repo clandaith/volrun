@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+  
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+        <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]], are you REALLY sure you want to logout?</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Yes, I want to log out"/>
+        </form>
+ 
+</div>
+ 
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+</head>
+<body>
+
+<div class="container">
+    <div th:fragment="header">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">GUM</a>
+    </div>
+    <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+      <li class=""><a href="/">Home</a></li>
+      <li class=""><a href="/scoreboard">Scoreboard</a></li>
+      <li class=""><a href="/loggame">Log Game</a></li>
+      <li class=""><a href="/settings">Settings</a></li>
+      <li class=""><a href="/messages">Messages</a></li>
+      <li class=""><a href="/companies/company/1">Comapny Settings</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" th:href="@{/users/user}">User</a></li>
+          <li><a href="#" th:href="@{/users}">All Users</a></li>
+          <li><a href="#" th:href="@{/companies/company}">Company</a></li>
+          <li><a href="#" th:href="@{/gamesystems/gamesystem}">Game Systems</a></li>
+        </ul>
+      </li>
+      <li><a href="#" th:href="@{/hello}">Hello</a></li>
+      <li><a href="#" th:href="@{/verify_logout}">Logout</a></li>
+    </ul>
+    
+    
+    <ul class="nav navbar-nav" sec:authorize="isAnonymous()">
+      <li class="active"><a href="#" th:href="@{/}">Home</a></li>
+	  <li><a href="#" th:href="@{/login}">Login</a></li>
+	  <li><a href="#" th:href="@{/createuser}">Create User</a></li>
+    </ul>
+    
+  </div>
+</nav>
+
+    
+        <div class="jumbotron">
+            <div class="row text-center">
+                <div class=""><h3>Game User Manager</h3></div>
+            </div>
+            <div class="row text-center">
+                <img src="/images/space-header.jpg" width="400"/>
+            </div> 
+        </div>
+    </div>
+</div>
+</body>
+</html>
