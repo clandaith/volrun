@@ -18,10 +18,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 		registry.addViewController("/requestmembership").setViewName("requestmembership");
 		registry.addViewController("/verify_logout").setViewName("verify_logout");
 
-		registry.addViewController("/admin/index").setViewName("admin/index");
-		registry.addViewController("/users/index").setViewName("users/index");
-		registry.addViewController("/users/viewfiles").setViewName("users/viewfiles");
-		registry.addViewController("/users/localusers").setViewName("users/localusers");
+		// registry.addViewController("/admin/index").setViewName("admin/index");
+		// registry.addViewController("/users/index").setViewName("users/index");
+		// registry.addViewController("/users/viewfiles").setViewName("users/viewfiles");
+		// registry.addViewController("/users/localusers").setViewName("users/localusers");
 
 		// registry.addViewController("/error").setViewName("/errors/general_error");
 		// registry.addViewController("/Access_Denied").setViewName("/errors/access_denied");
