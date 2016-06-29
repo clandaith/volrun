@@ -12,16 +12,19 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/home").setViewName("home");
 		registry.addViewController("/").setViewName("home");
-		// registry.addViewController("/hello").setViewName("hello");
-		// registry.addViewController("/login").setViewName("login");
-		// registry.addViewController("/about").setViewName("about");
-		// registry.addViewController("/createuser").setViewName("createuser");
-		// registry.addViewController("/verify_logout").setViewName("verify_logout");
+		registry.addViewController("/hello").setViewName("hello");
+		registry.addViewController("/login").setViewName("login");
+		registry.addViewController("/about801dev").setViewName("about801dev");
+		registry.addViewController("/requestmembership").setViewName("requestmembership");
+		registry.addViewController("/verify_logout").setViewName("verify_logout");
+
+		registry.addViewController("/admin/index").setViewName("admin/index");
+		registry.addViewController("/users/index").setViewName("users/index");
+		registry.addViewController("/users/viewfiles").setViewName("users/viewfiles");
+		registry.addViewController("/users/localusers").setViewName("users/localusers");
 
 		// registry.addViewController("/error").setViewName("/errors/general_error");
 		// registry.addViewController("/Access_Denied").setViewName("/errors/access_denied");
-		// registry.addViewController("/users/user").setViewName("/user/user");
-		// registry.addViewController("/companies/company").setViewName("/company/company");
 	}
 
 	@Bean

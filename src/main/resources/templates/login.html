@@ -7,21 +7,24 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+        
         <div th:if="${param.error}">
-            Invalid username and password.
+            Invalid username and/or password.
         </div>
+        
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
+        
         <div th:if="${param.created}">
             User created!  Please login.
         </div>
+        
         <form th:action="@{/login}" method="post">
             <div><label> User Name : <input type="text" name="multipassName"/> </label></div>
             <div><label> Password: <input type="password" name="multipassIdent"/> </label></div>
             <div><input type="submit" value="Sign In"/></div>
         </form>
- 
 </div>
  
 </body>

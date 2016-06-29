@@ -21,10 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-						.antMatchers("/", "/home", "/resources/**", "/webjars/**", "/about", "/createuser").permitAll()
+						.antMatchers("/", "/home", "/resources/**", "/about801dev", "/requestmembership").permitAll()
 						.antMatchers("/manage/**").access("hasRole('ADMIN')")
-						//.antMatchers("/users/**").access("hasRole('USER') or hasRole('ADMIN')")
-						//.antMatchers("/companies/**").access("hasRole('COMPANY') or hasRole('ADMIN')")
+						.antMatchers("/users/**").access("hasRole('USER') or hasRole('ADMIN')")
+						.antMatchers("/admin/**").access("hasRole('ADMIN')")
 						.anyRequest().authenticated()
 						.and()
 							.formLogin()
