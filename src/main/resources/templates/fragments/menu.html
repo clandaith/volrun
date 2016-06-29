@@ -10,29 +10,51 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
+  
     <div class="navbar-header">
       <a class="navbar-brand" href="/">VOLRUN</a>
     </div>
+    
     <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
       
       <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
-        <span class="caret"></span></a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+     
         <ul class="dropdown-menu">
+        
+	      <li >
+	        <a class="test" href="#">Tournaments <span class="caret"></span></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#" th:href="@{/users/index}">Scheduled Tournaments</a></li>
+	          <li><a href="#" th:href="@{/users/index}">Reported Tournaments</a></li>
+	        </ul>
+	      </li>
+	        
+<li class="divider"></li>
+	      <li>
+	        <a class="test" data-toggle="dropdown" href="#">Demos <span class="caret" /></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#" th:href="@{/users/index}">Scheduled Demos</a></li>
+	          <li><a href="#" th:href="@{/users/index}">Reported Demos</a></li>
+	        </ul>
+	      </li>
+        
+<li class="divider"></li>
           <li><a href="#" th:href="@{/admin/index}">View Membership Requests</a></li>
           <li><a href="#" th:href="@{/admin/index}">View Current Members</a></li>
-          <li><a href="#" th:href="@{/admin/index}">View Completed Demos</a></li>
-          <li><a href="#" th:href="@{/admin/index}">View Completed Tournaments</a></li>
-          <li><a href="#" th:href="@{/admin/index}">View Demo Requests</a></li>
-          <li><a href="#" th:href="@{/admin/index}">View Tournament Requests</a></li>
+          
+          <!-- <li><a href="#" th:href="@{/admin/index}">View Completed Demos</a></li> -->
+          <!-- <li><a href="#" th:href="@{/admin/index}">View Completed Tournaments</a></li> -->
+          <!-- <li><a href="#" th:href="@{/admin/index}">View Demo Requests</a></li> -->
+          <!-- <li><a href="#" th:href="@{/admin/index}">View Tournament Requests</a></li> -->
+          
           <li><a href="#" th:href="@{/admin/index}">Add/View Files</a></li>
           <li><a href="#" th:href="@{/admin/index}">Send Message</a></li>
         </ul>
       </li>
     
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Demos
-        <span class="caret"></span></a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Demos<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#" th:href="@{/users/index}">Schedule Demo</a></li>
           <li><a href="#" th:href="@{/users/index}">Report on a Demo</a></li>
@@ -40,8 +62,7 @@
       </li>
     
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments
-        <span class="caret"></span></a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#" th:href="@{/users/index}">Schedule a Tournament</a></li>
           <li><a href="#" th:href="@{/users/index}">Report on a Tournament</a></li>
@@ -54,11 +75,37 @@
       <li><a href="#" th:href="@{/verify_logout}">Logout</a></li>
     </ul>
     
-    
+    <!--
     <ul class="nav navbar-nav" sec:authorize="isAnonymous()">
 	  <li><a href="#" th:href="@{/login}">Login</a></li>
 	  <li><a href="#" th:href="@{/requestmembership}">Request Membership</a></li>
     </ul>
+    -->
+    
+    <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
+    <div class="dropdown-menu">
+      <form  th:action="@{/login}" method="post" id="formlogin" class="form container-fluid">
+        <div class="form-group">
+          <label for="usr">Name:</label>
+          <input type="text" class="form-control" id="usr"  name="multipassName"/>
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd"  name="multipassIdent"/>
+        </div>
+          <button type="submit" id="btnLogin" class="btn btn-block">Login</button>
+      </form>
+      <div class="container-fluid">
+        <a class="small" href="#">Forgot password?</a>
+      </div> 
+      <div class="container-fluid">
+        <a class="small" href="#">Not a user?</a>
+      </div> 
+    </div>
+  </li>
+</ul>
     
   </div>
 </nav>
