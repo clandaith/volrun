@@ -72,19 +72,12 @@
       <li><a href="#" th:href="@{/users/viewfiles}" sec:authorize="hasRole('ROLE_USER')">View Files</a></li>
       <li><a href="#" th:href="@{/users/localusers}" sec:authorize="hasRole('ROLE_USER')">View Local Users</a></li>
       
-      <li><a href="#" th:href="@{/verify_logout}">Logout</a></li>
+      <li><a href="#" th:href="@{/verify_logout}">Logout  <span class="glyphicon glyphicon-log-out" /></a></li>
     </ul>
-    
-    <!--
-    <ul class="nav navbar-nav" sec:authorize="isAnonymous()">
-	  <li><a href="#" th:href="@{/login}">Login</a></li>
-	  <li><a href="#" th:href="@{/requestmembership}">Request Membership</a></li>
-    </ul>
-    -->
     
     <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
   <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <span class="glyphicon glyphicon-log-in"></span></a>
     <div class="dropdown-menu">
       <form  th:action="@{/login}" method="post" id="formlogin" class="form container-fluid">
         <div class="form-group">
