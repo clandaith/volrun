@@ -82,13 +82,11 @@ ALTER TABLE user_roles ADD CONSTRAINT FK_user_roles_username_id FOREIGN KEY (use
 
 --++++++++++++++++++++++++++++++++++++++++++
 -- Users
---foobar
 insert into users (username, password, first_name, last_name, address1, address2, city, state, zip, phone_number, country, email_address, description, date_added, date_updated) values 
-('clandaith', '$2a$04$TscCrxAG7wWoohfQSGiQDeLJ2oVcdRDweQwsz/.zDPJgbdFS.2eiq', 'Troy', 'Davidson', '1874 S 900 E', '', 'Bountiful', 'UT', '84010', 8016631460, 'USA', 'clandaith@gmail.com', 'desc', now(), now());
+('clandaith', '$2a$04$IsxBaKz3K3VRgRucm3LzKO2DZodMSsidGOmIEQDRrQlreh/vA4UQC', 'Troy', 'Davidson', '1874 S 900 E', '', 'Bountiful', 'UT', '84010', 8016631460, 'USA', 'clandaith@gmail.com', 'desc', now(), now());
 
---blork
 insert into users (username, password, first_name, last_name, address1, address2, city, state, zip, phone_number, country, email_address, description, date_added, date_updated) values 
-('test', '$2a$04$nvyE1PYF2JnLbpk8WqsYQOEpNZHaDolwMaPvDEdrQDiaw5jO7HLEK', 'Test', 'User', '123 Main St', 'Apt 1', 'NSL', 'UT', '84511', 8015558888, 'USA', 'test@clandaith.com', 'other desc', now(), now());
+('test', '$2a$04$bXho5/ltm.qCttW6F54nROn1zWv4MjoLqWekaWl9U74IaQE4NJR2K', 'Test', 'User', '123 Main St', 'Apt 1', 'NSL', 'UT', '84511', 8015558888, 'USA', 'test@clandaith.com', 'other desc', now(), now());
 
 --++++++++++++++++++++++++++++++++++++++++++
 -- User Roles
