@@ -27,15 +27,15 @@ public class AdminController {
 		return "admin/index";
 	}
 
-	@RequestMapping("/admin/add-view-files")
+	@RequestMapping("/admin/addviewfiles")
 	public String addViewFiles(Model model) {
-		LOGGER.info("index");
+		LOGGER.info("addViewFiles");
 		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/addViewFiles";
 	}
 
-	@RequestMapping("/admin/completed-demos")
+	@RequestMapping("/admin/completeddemos")
 	public String completedDemos(Model model) {
 		LOGGER.info("completedDemos");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -43,7 +43,7 @@ public class AdminController {
 		return "admin/completedDemos";
 	}
 
-	@RequestMapping("/admin/completed-tournaments")
+	@RequestMapping("/admin/completedtournaments")
 	public String completedTournaments(Model model) {
 		LOGGER.info("completedTournaments");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -51,7 +51,7 @@ public class AdminController {
 		return "admin/completedTournaments";
 	}
 
-	@RequestMapping("/admin/current-members")
+	@RequestMapping("/admin/currentmembers")
 	public String currentMembers(Model model) {
 		LOGGER.info("currentMembers");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -59,7 +59,7 @@ public class AdminController {
 		return "admin/currentMembers";
 	}
 
-	@RequestMapping("/admin/demo-requests")
+	@RequestMapping("/admin/demorequests")
 	public String demoRequests(Model model) {
 		LOGGER.info("demoRequests");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -67,7 +67,7 @@ public class AdminController {
 		return "admin/demoRequests";
 	}
 
-	@RequestMapping("/admin/membership-requests")
+	@RequestMapping("/admin/membershiprequests")
 	public String membershipRequests(Model model) {
 		LOGGER.info("membershipRequests");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -75,7 +75,7 @@ public class AdminController {
 		return "admin/membershipRequests";
 	}
 
-	@RequestMapping("/admin/scheduled-demos")
+	@RequestMapping("/admin/scheduleddemos")
 	public String scheduledDemos(Model model) {
 		LOGGER.info("scheduledDemos");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -83,7 +83,7 @@ public class AdminController {
 		return "admin/scheduledDemos";
 	}
 
-	@RequestMapping("/admin/scheduled-tournaments")
+	@RequestMapping("/admin/scheduledtournaments")
 	public String scheduledTournaments(Model model) {
 		LOGGER.info("scheduledTournaments");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -91,7 +91,7 @@ public class AdminController {
 		return "admin/scheduledTournaments";
 	}
 
-	@RequestMapping("/admin/send-message")
+	@RequestMapping("/admin/sendmessage")
 	public String sendMessage(Model model) {
 		LOGGER.info("sendMessage");
 		// model.addAttribute("users", userService.getAllUsers());

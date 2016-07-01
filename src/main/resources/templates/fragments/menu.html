@@ -18,54 +18,51 @@
     <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
       
       <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tasks<span class="caret"></span></a>
      
         <ul class="dropdown-menu">
-        
-	      <li  class="dropdown-submenu1">
+          <li  class="dropdown-submenu1">
 	        <a class="test" href="#">Tournaments <span class="caret"></span></a>
 	        <ul class="dropdown-menu">
-	          <li><a href="#" th:href="@{/users/index}">Scheduled Tournaments</a></li>
-	          <li><a href="#" th:href="@{/users/index}">Reported Tournaments</a></li>
+	          <li><a href="#" th:href="@{/admin/scheduledtournaments}">Scheduled Tournaments</a></li>
+	          <li><a href="#" th:href="@{/admin/completedtournaments}">Reported Tournaments</a></li>
 	        </ul>
 	      </li>
 	        
-<li class="divider"></li>
+          <li class="divider"></li>
 	      <li class="dropdown-submenu1">
 	        <a class="test" data-toggle="dropdown" href="#">Demos <span class="caret" /></a>
 	        <ul class="dropdown-menu">
-	          <li><a href="#" th:href="@{/users/index}">Scheduled Demos</a></li>
-	          <li><a href="#" th:href="@{/users/index}">Reported Demos</a></li>
+	          <li><a href="#" th:href="@{/admin/demorequests}">Store Demo Requests</a></li>
+	          <li><a href="#" th:href="@{/admin/scheduleddemos}">Scheduled Demos</a></li>
+	          <li><a href="#" th:href="@{/admin/completeddemos}">Reported Demos</a></li>
 	        </ul>
 	      </li>
         
-<li class="divider"></li>
-          <li><a href="#" th:href="@{/admin/index}">View Membership Requests</a></li>
-          <li><a href="#" th:href="@{/admin/index}">View Current Members</a></li>
+          <li class="divider"></li>
+          <li><a href="#" th:href="@{/admin/membershiprequests}">View Membership Requests</a></li>
+          <li><a href="#" th:href="@{/admin/currentmembers}">View Current Members</a></li>
           
-          <!-- <li><a href="#" th:href="@{/admin/index}">View Completed Demos</a></li> -->
-          <!-- <li><a href="#" th:href="@{/admin/index}">View Completed Tournaments</a></li> -->
-          <!-- <li><a href="#" th:href="@{/admin/index}">View Demo Requests</a></li> -->
-          <!-- <li><a href="#" th:href="@{/admin/index}">View Tournament Requests</a></li> -->
-          
-          <li><a href="#" th:href="@{/admin/index}">Add/View Files</a></li>
-          <li><a href="#" th:href="@{/admin/index}">Send Message</a></li>
+          <li><a href="#" th:href="@{/admin/addviewfiles}">Add/View Files</a></li>
+          <li><a href="#" th:href="@{/admin/sendmessage}">Send Message</a></li>
         </ul>
       </li>
+    
+    <!-- Users menu -->
     
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Demos<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/index}">Schedule Demo</a></li>
-          <li><a href="#" th:href="@{/users/index}">Report on a Demo</a></li>
+          <li><a href="#" th:href="@{/users/demoscheduler}">Schedule Demo</a></li>
+          <li><a href="#" th:href="@{/users/demoreporter}">Report on a Demo</a></li>
         </ul>
       </li>
     
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/index}">Schedule a Tournament</a></li>
-          <li><a href="#" th:href="@{/users/index}">Report on a Tournament</a></li>
+          <li><a href="#" th:href="@{/users/tournamentscheduler}">Schedule a Tournament</a></li>
+          <li><a href="#" th:href="@{/users/tournamentreporter}">Report on a Tournament</a></li>
         </ul>
       </li>
       
@@ -91,10 +88,10 @@
           <button type="submit" id="btnLogin" class="btn btn-block">Login</button>
       </form>
       <div class="container-fluid">
-        <a class="small" href="#">Forgot password?</a>
+        <a class="small" href="/forgotpassword">Forgot password?</a>
       </div> 
       <div class="container-fluid">
-        <a class="small" href="#">Not a user?</a>
+        <a class="small" href="/requestmembership">Not a user?</a>
       </div> 
     </div>
   </li>

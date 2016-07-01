@@ -27,6 +27,38 @@ public class UsersController {
 		return "users/index";
 	}
 
+	@RequestMapping("/users/demoscheduler")
+	public String demoSchedule(Model model) {
+		LOGGER.info("demoSchedule");
+		// model.addAttribute("users", userService.getAllUsers());
+
+		return "users/demoScheduler";
+	}
+
+	@RequestMapping("/users/demoreporter")
+	public String demoReport(Model model) {
+		LOGGER.info("demoReport");
+		// model.addAttribute("users", userService.getAllUsers());
+
+		return "users/demoReporter";
+	}
+
+	@RequestMapping("/users/tournamentscheduler")
+	public String tournamentSchedule(Model model) {
+		LOGGER.info("tournamentSchedule");
+		// model.addAttribute("users", userService.getAllUsers());
+
+		return "users/tournamentScheduler";
+	}
+
+	@RequestMapping("/users/tournamentreporter")
+	public String tournamentReport(Model model) {
+		LOGGER.info("tournamentReport");
+		// model.addAttribute("users", userService.getAllUsers());
+
+		return "users/tournamentReporter";
+	}
+
 	@RequestMapping("/users/viewfiles")
 	public String viewFiles(Model model) {
 		LOGGER.info("viewFiles");
