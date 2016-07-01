@@ -51,7 +51,7 @@ CREATE TABLE users
 	,state VARCHAR(250)  NULL 
 	,zip VARCHAR(250)  NULL 
 	,country VARCHAR(250)  NULL 
-	,phone_number BIGINT  NULL 
+	,phone_number BIGINT unique NULL 
 	,date_added TIMESTAMP NOT NULL
 	,date_updated TIMESTAMP NOT NULL
 	,email_address VARCHAR(250) unique  NOT NULL 
