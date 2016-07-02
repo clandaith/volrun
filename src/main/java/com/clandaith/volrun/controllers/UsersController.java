@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clandaith.volrun.services.UserRoleService;
 import com.clandaith.volrun.services.UserService;
@@ -29,6 +30,14 @@ public class UsersController {
 
 	@RequestMapping("/users/demoscheduler")
 	public String demoSchedule(Model model) {
+		LOGGER.info("demoSchedule");
+		// model.addAttribute("users", userService.getAllUsers());
+
+		return "users/demoScheduler";
+	}
+
+	@RequestMapping(value = "/users/demoscheduler", method = RequestMethod.POST)
+	public String demoScheduleSaver(Model model) {
 		LOGGER.info("demoSchedule");
 		// model.addAttribute("users", userService.getAllUsers());
 
