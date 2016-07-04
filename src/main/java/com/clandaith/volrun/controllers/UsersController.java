@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.clandaith.volrun.entities.Demo;
 import com.clandaith.volrun.services.UserRoleService;
 import com.clandaith.volrun.services.UserService;
 
@@ -39,7 +40,7 @@ public class UsersController {
 	@RequestMapping(value = "/users/demoscheduler", method = RequestMethod.POST)
 	public String demoScheduleSaver(Model model) {
 		LOGGER.info("demoSchedule");
-		// model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("demo", new Demo());
 
 		return "users/demoScheduler";
 	}
