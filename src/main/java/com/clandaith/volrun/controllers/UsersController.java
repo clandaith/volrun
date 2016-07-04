@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clandaith.volrun.entities.Demo;
-import com.clandaith.volrun.services.UserRoleService;
-import com.clandaith.volrun.services.UserService;
+import com.clandaith.volrun.services.DemoService;
 
 @Controller
 public class UsersController {
 	private static final Logger LOGGER = Logger.getLogger(UsersController.class);
 
 	@Autowired
-	UserService userService;
-
-	@Autowired
-	UserRoleService userRoleService;
+	DemoService demoService;
 
 	@RequestMapping("/users/index")
 	public String index(Model model) {
@@ -32,15 +28,16 @@ public class UsersController {
 	@RequestMapping("/users/demoscheduler")
 	public String demoSchedule(Model model) {
 		LOGGER.info("demoSchedule");
-		// model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("demo", new Demo());
 
 		return "users/demoScheduler";
 	}
 
 	@RequestMapping(value = "/users/demoscheduler", method = RequestMethod.POST)
-	public String demoScheduleSaver(Model model) {
+	public String demoScheduleSaver(Demo demo) {
 		LOGGER.info("demoSchedule");
-		model.addAttribute("demo", new Demo());
+
+		demoService.saveDemo(demo);
 
 		return "users/demoScheduler";
 	}
