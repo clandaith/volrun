@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "demos")
@@ -17,35 +20,50 @@ public class Demo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id; // SERIAL not null primary key ,
+
 	@Column(name = "user_id")
 	private Integer userId; // int not null ,
+
+	@NotNull
 	@Column(name = "store_id")
 	private Integer storeId; // int not null,
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL,
+	private Date dateEntered = new Date(); // TIMESTAMP NOT NULL,
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_of_demo")
-	private Date dateOfDemo; // TIMESTAMP NOT NULL,
+	private Date dateOfDemo = new Date(); // TIMESTAMP NOT NULL,
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_time")
-	private Date startTime; // TIMESTAMP NOT NULL,
+	private Date startTime = new Date(); // TIMESTAMP NOT NULL,
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_time")
-	private Date endTime; // TIMESTAMP NOT NULL,
+	private Date endTime = new Date(); // TIMESTAMP NOT NULL,
+
 	private Boolean completed; // boolean NOT NULL default 'false',
+
+	@Size(min = 2)
 	@Column(name = "pre_notes")
 	private String preNotes; // VARCHAR(4000) NOT NULL ,
+
 	@Column(name = "post_notes")
 	private String postNotes; // VARCHAR(4000) NOT NULL ,
+
+	@Min(0)
 	@Column(name = "number_of_demos")
 	private Integer numberOfDemos; // int not null,
+
+	@Min(0)
 	@Column(name = "number_of_people")
 	private Integer numberOfPeople; // int not null,
+
 	@Column(name = "store_response")
 	private String storeResponse; // VARCHAR(250) NOT NULL
 
