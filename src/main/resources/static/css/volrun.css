@@ -8,3 +8,12 @@
     margin-top: -1px;
 }
 
+#footer {
+    position:fixed;
+    background-color:#000;
+    left:0px;
+    bottom:0px;
+    height:100px;
+    width:100%;
+    display:none;
+}

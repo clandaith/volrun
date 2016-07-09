@@ -12,3 +12,12 @@ $(document).ready(function(){
     e.preventDefault();
   });
 });
+
+$(window).scroll(function() {
+    if ($(this).scrollTop() < 100) {
+        $("#footer").hide();
+    }
+    else {
+        $("#footer").show();
+    }
+});
