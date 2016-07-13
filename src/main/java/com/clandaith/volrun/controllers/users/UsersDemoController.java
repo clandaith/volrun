@@ -21,6 +21,7 @@ import com.clandaith.volrun.entities.Demo;
 import com.clandaith.volrun.entities.User;
 import com.clandaith.volrun.helpers.LenientDateParser;
 import com.clandaith.volrun.services.DemoService;
+import com.clandaith.volrun.services.StoreService;
 import com.clandaith.volrun.services.UserService;
 
 @Controller
@@ -33,12 +34,16 @@ public class UsersDemoController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	StoreService storeService;
+
 	@RequestMapping("/users/demoscheduler")
 	public String demoSchedule(Model model) {
 		LOGGER.info("demoSchedule");
 
 		model.addAttribute("demo", new Demo());
 		model.addAttribute("userId", getUser().getId());
+		model.addAttribute("storeList", storeService.getAll());
 
 		return "users/demoScheduler";
 	}
