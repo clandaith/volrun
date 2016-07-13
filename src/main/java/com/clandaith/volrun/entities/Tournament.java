@@ -16,37 +16,37 @@ import javax.persistence.TemporalType;
 public class Tournament {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
 	@Column(name = "user_id")
-	private Integer userId; // int not null ,
+	private Integer userId;
 	@Column(name = "store_id")
-	private Integer storeId; // int not null,
+	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL,
+	private Date dateEntered;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_tournament")
-	private Date dateOfTournament; // TIMESTAMP NOT NULL,
+	private Date dateOfTournament;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
-	private Date startTime; // TIMESTAMP NOT NULL,
+	private Date startTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
-	private Date endTime; // TIMESTAMP NOT NULL,
+	private Date endTime;
 
-	private Boolean completed; // boolean NOT NULL default 'false',
+	private Boolean completed;
 	@Column(name = "pre_notes")
-	private String preNotes; // VARCHAR(4000) NOT NULL ,
+	private String preNotes;
 	@Column(name = "post_notes")
-	private String postNotes; // VARCHAR(4000) NOT NULL ,
+	private String postNotes;
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople; // int not null,
+	private Integer numberOfPeople;
 	@Column(name = "store_response")
-	private String storeResponse; // VARCHAR(250) NOT NULL
+	private String storeResponse;
 
 	public Integer getId() {
 		return id;

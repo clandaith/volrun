@@ -16,14 +16,14 @@ import javax.persistence.TemporalType;
 public class File {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
 	@Column(name = "file_name")
-	private String fileName; // VARCHAR(250) unique NOT NULL ,
-	private String description; // VARCHAR(250) NOT NULL ,
+	private String fileName;
+	private String description;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL
+	private Date dateEntered;
 
 	public Integer getId() {
 		return id;

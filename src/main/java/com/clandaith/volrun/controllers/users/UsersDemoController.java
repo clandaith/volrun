@@ -1,17 +1,16 @@
 package com.clandaith.volrun.controllers.users;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clandaith.volrun.entities.Demo;
 import com.clandaith.volrun.entities.User;
+import com.clandaith.volrun.helpers.LenientDateParser;
 import com.clandaith.volrun.services.DemoService;
 import com.clandaith.volrun.services.UserService;
 
@@ -47,11 +47,13 @@ public class UsersDemoController {
 	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult) {
 		LOGGER.info("demoScheduleSaver");
 
-		// demoService.saveDemo(demo);
-
 		if (bindingResult.hasErrors()) {
 			LOGGER.info("bindingResult.hasErrors()");
-			LOGGER.info(bindingResult.getAllErrors().toString());
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				LOGGER.info(obj.toString());
+			}
+		} else {
+			demoService.saveDemo(demo);
 		}
 
 		return "users/demoScheduler";
@@ -73,8 +75,7 @@ public class UsersDemoController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
-		binder.registerCustomEditor(Date.class, editor);
+		binder.registerCustomEditor(Date.class, new LenientDateParser("yyyy-MM-dd"));
 	}
 
 	private User getUser() {

@@ -19,53 +19,53 @@ import javax.validation.constraints.Size;
 public class Demo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
 
 	@Column(name = "user_id")
-	private Integer userId; // int not null ,
+	private Integer userId;
 
 	@NotNull
 	@Column(name = "store_id")
-	private Integer storeId; // int not null,
+	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_entered")
-	private Date dateEntered = new Date(); // TIMESTAMP NOT NULL,
+	private Date dateEntered = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_demo")
-	private Date dateOfDemo = new Date(); // TIMESTAMP NOT NULL,
+	private Date dateOfDemo = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
-	private Date startTime = new Date(); // TIMESTAMP NOT NULL,
+	private Date startTime = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
-	private Date endTime = new Date(); // TIMESTAMP NOT NULL,
+	private Date endTime = new Date();
 
-	private Boolean completed; // boolean NOT NULL default 'false',
+	private Boolean completed;
 
 	@Size(min = 2)
 	@Column(name = "pre_notes")
-	private String preNotes; // VARCHAR(4000) NOT NULL ,
+	private String preNotes;
 
 	@Column(name = "post_notes")
-	private String postNotes; // VARCHAR(4000) NOT NULL ,
+	private String postNotes;
 
 	@Min(0)
 	@Column(name = "number_of_demos")
-	private Integer numberOfDemos; // int not null,
+	private Integer numberOfDemos;
 
 	@Min(0)
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople; // int not null,
+	private Integer numberOfPeople;
 
 	@Column(name = "store_response")
-	private String storeResponse; // VARCHAR(250) NOT NULL
+	private String storeResponse;
 
 	public Integer getId() {
 		return id;
@@ -111,12 +111,20 @@ public class Demo {
 		return startTime;
 	}
 
+	public void setStartTime(String startTime) {
+		this.startTime = new Date();
+	}
+
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
 	public Date getEndTime() {
 		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = new Date();
 	}
 
 	public void setEndTime(Date endTime) {

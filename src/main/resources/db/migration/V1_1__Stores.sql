@@ -12,3 +12,6 @@ create table stores(
 );
 
 create index stores_store_name on stores(store_name);
+
+
+insert into stores (store_name, address1, address2, city, state, zip, country, phonenumber, date_entered) values ('Random Store', 'Addy 1', 'Addy 2', 'Some City', 'ST', '123 456', 'USA', 8015551212, now());
