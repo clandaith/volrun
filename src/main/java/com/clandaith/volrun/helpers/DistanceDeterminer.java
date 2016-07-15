@@ -20,6 +20,7 @@ public class DistanceDeterminer {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+
 		}
 	}
 
