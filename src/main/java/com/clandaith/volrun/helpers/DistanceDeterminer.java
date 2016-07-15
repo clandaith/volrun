@@ -21,7 +21,7 @@ public class DistanceDeterminer {
 				System.out.println(geometry.location.lat + " :: " + geometry.location.lng);
 			}
 		} catch (Exception e) {
-			LOGGER.error("", e);
+			LOGGER.error("Error", e);
 		}
 	}
 
