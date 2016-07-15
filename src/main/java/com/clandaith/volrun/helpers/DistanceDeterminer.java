@@ -1,11 +1,14 @@
 package com.clandaith.volrun.helpers;
 
+import org.apache.log4j.Logger;
+
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 
 public class DistanceDeterminer {
+	private static final Logger LOGGER = Logger.getLogger(DistanceDeterminer.class);
 
 	public static void main(String[] args) {
 		GeoApiContext context = new GeoApiContext().setApiKey("");
@@ -18,9 +21,7 @@ public class DistanceDeterminer {
 				System.out.println(geometry.location.lat + " :: " + geometry.location.lng);
 			}
 		} catch (Exception e) {
-
-			e.printStackTrace();
-
+			LOGGER.error("", e);
 		}
 	}
 
