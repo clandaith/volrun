@@ -7,22 +7,31 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 
-public class DistanceDeterminer {
-	private static final Logger LOGGER = Logger.getLogger(DistanceDeterminer.class);
+public class DistanceHandler {
+	private static final Logger LOGGER = Logger.getLogger(DistanceHandler.class);
 
 	public static void main(String[] args) {
-		GeoApiContext context = new GeoApiContext().setApiKey("");
+		new DistanceHandler().getGeometry("1874 s 900 e, BOUNTIFUL, UT, 84010");
+		new DistanceHandler().getGeometry("1874 South 900 East, BOUNTIFUL, UT, 84010");
+		new DistanceHandler().getGeometry("1874 s 900 e, BOUNTIFUL, UTah, 84010");
+		new DistanceHandler().getGeometry("1874 south 900 e, UT");
+	}
+
+	public Geometry getGeometry(String s) {
+		GeoApiContext context = new GeoApiContext().setApiKey(System.getenv("GOOGLE_API_KEY"));
 		try {
-			GeocodingResult[] results = GeocodingApi.geocode(context, "84010").await();
+			GeocodingResult[] results = GeocodingApi.geocode(context, s).await();
 			for (int i = 0; i < results.length; i++) {
 
 				Geometry geometry = results[i].geometry;
 
-				System.out.println(geometry.location.lat + " :: " + geometry.location.lng);
+				System.out.println(i + " : " + geometry.location.lat + " :: " + geometry.location.lng);
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error", e);
 		}
+
+		return null;
 	}
 
 	/*

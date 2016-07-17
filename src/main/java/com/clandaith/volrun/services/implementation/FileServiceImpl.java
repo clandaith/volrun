@@ -12,15 +12,24 @@ import com.google.common.collect.Lists;
 
 @Service
 public class FileServiceImpl implements FileService {
+	@Autowired
 	private FileRepository fileRepository;
 
-	@Autowired
 	public void setRepository(FileRepository fr) {
 		this.fileRepository = fr;
 	}
 
 	@Override
 	public List<File> getAll() {
+		// List<File> files = new ArrayList<>();
+		//
+		// Iterable<File> i = fileRepository.findAll();
+		// if (i != null) {
+		// files.addAll(Lists.newArrayList(i));
+		// }
+		//
+		// return files;
+
 		return Lists.newArrayList(fileRepository.findAll());
 	}
 }
