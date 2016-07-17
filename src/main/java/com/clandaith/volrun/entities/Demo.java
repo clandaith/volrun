@@ -47,25 +47,25 @@ public class Demo {
 	@Column(name = "end_time")
 	private Date endTime = new Date();
 
-	private Boolean completed;
+	private Boolean completed = false;
 
 	@Size(min = 2)
 	@Column(name = "pre_notes")
-	private String preNotes;
+	private String preNotes = "";
 
 	@Column(name = "post_notes")
-	private String postNotes;
+	private String postNotes = "";
 
 	@Min(0)
 	@Column(name = "number_of_demos")
-	private Integer numberOfDemos;
+	private Integer numberOfDemos = -1;
 
 	@Min(0)
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople;
+	private Integer numberOfPeople = -1;
 
 	@Column(name = "store_response")
-	private String storeResponse;
+	private String storeResponse = "";
 
 	public Integer getId() {
 		return id;
