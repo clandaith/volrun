@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.clandaith.volrun.entities.User;
 import com.clandaith.volrun.helpers.AddressFormatter;
@@ -16,9 +15,9 @@ import com.google.maps.model.LatLng;
 
 @Service
 public class UserServiceImpl implements UserService {
+	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
 	public void setRepository(UserRepository sr) {
 		this.userRepository = sr;
 	}
@@ -39,7 +38,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public User saveUser(User user) {
 		LatLng latLong = DistanceHandler.getLatLng(AddressFormatter.formatUserAddress(user));
 

@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.clandaith.volrun.entities.Store;
+import com.clandaith.volrun.helpers.AddressFormatter;
+import com.clandaith.volrun.helpers.DistanceHandler;
 import com.clandaith.volrun.helpers.repositories.StoreRepository;
 import com.clandaith.volrun.services.StoreService;
 import com.google.common.collect.Lists;
+import com.google.maps.model.LatLng;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -21,15 +24,6 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public List<Store> getAll() {
-		// List<Store> stores = new ArrayList<>();
-		//
-		// Iterable<Store> i = storeRepository.findAll();
-		// if (i != null) {
-		// stores.addAll(Lists.newArrayList(i));
-		// }
-		//
-		// return stores;
-
 		return Lists.newArrayList(storeRepository.findAll());
 	}
 
@@ -40,17 +34,30 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public Store saveStore(Store store) {
-		return storeRepository.save(store);
+		return saveUpdate(store);
 	}
 
 	@Override
 	public Store updateStore(Store store) {
+		return saveUpdate(store);
+	}
+
+	private Store saveUpdate(Store store) {
+		LatLng latLong = DistanceHandler.getLatLng(AddressFormatter.formatStoreAddress(store));
+
+		if (latLong != null) {
+			store.setLatitude(latLong.lat);
+			store.setLatitude(latLong.lng);
+		} else {
+			store.setLatitude(0D);
+			store.setLongitude(0D);
+		}
+
 		return storeRepository.save(store);
 	}
 
 	@Override
 	public void deleteStore(Store store) {
 		storeRepository.delete(store);
-
 	}
 }

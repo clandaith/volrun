@@ -9,18 +9,38 @@ public class AddressFormatter {
 	private static final Logger LOGGER = Logger.getLogger(AddressFormatter.class);
 
 	public static String formatStoreAddress(Store store) {
-		String address = store.getAddress1() + ", " + store.getAddress2() + ", " + store.getCity() + ", " + store.getState() + ", "
-						+ store.getZip() + ", " + store.getCountry();
-		LOGGER.info(address);
+		StringBuilder builder = new StringBuilder();
+		builder.append(formatField(store.getAddress1()));
+		builder.append(formatField(store.getAddress2()));
+		builder.append(formatField(store.getCity()));
+		builder.append(formatField(store.getState()));
+		builder.append(formatField(store.getState()));
+		builder.append(formatField(store.getCountry()));
 
-		return address;
+		LOGGER.info(builder.toString());
+
+		return builder.toString();
 	}
 
 	public static String formatUserAddress(User user) {
-		String address = user.getAddress1() + ", " + user.getAddress2() + ", " + user.getCity() + ", " + user.getState() + ", "
-						+ user.getZip() + ", " + user.getCountry();
-		LOGGER.info(address);
+		StringBuilder builder = new StringBuilder();
+		builder.append(formatField(user.getAddress1()));
+		builder.append(formatField(user.getAddress2()));
+		builder.append(formatField(user.getCity()));
+		builder.append(formatField(user.getState()));
+		builder.append(formatField(user.getState()));
+		builder.append(formatField(user.getCountry()));
 
-		return address;
+		LOGGER.info(builder.toString());
+
+		return builder.toString();
+	}
+
+	private static String formatField(String field) {
+		if (field != null) {
+			return ", " + field;
+		} else {
+			return "";
+		}
 	}
 }
