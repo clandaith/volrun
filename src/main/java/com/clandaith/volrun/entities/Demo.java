@@ -29,8 +29,8 @@ public class Demo {
 	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered = new Date();
+	@Column(name = "date_added")
+	private Date dateAdded = new Date();
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -91,12 +91,12 @@ public class Demo {
 		this.storeId = storeId;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 
 	public Date getDateOfDemo() {

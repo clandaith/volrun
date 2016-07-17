@@ -4,28 +4,30 @@ import org.apache.log4j.Logger;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.Geometry;
+import com.google.maps.model.LatLng;
 
 public class DistanceHandler {
 	private static final Logger LOGGER = Logger.getLogger(DistanceHandler.class);
 
-	public static void main(String[] args) {
-		new DistanceHandler().getGeometry("1874 s 900 e, BOUNTIFUL, UT, 84010");
-		new DistanceHandler().getGeometry("1874 South 900 East, BOUNTIFUL, UT, 84010");
-		new DistanceHandler().getGeometry("1874 s 900 e, BOUNTIFUL, UTah, 84010");
-		new DistanceHandler().getGeometry("1874 south 900 e, UT");
+	public static void main1(String[] args) {
+		DistanceHandler.getGeometry("1874 s 900 e, BOUNTIFUL, UT, 84010");
+		DistanceHandler.getGeometry("1874 South 900 East, BOUNTIFUL, UT, 84010");
+		DistanceHandler.getGeometry("1874 s 900 e, BOUNTIFUL, UTah, 84010");
+		DistanceHandler.getGeometry("1874 south 900 e, UafdasdT");
 	}
 
-	public Geometry getGeometry(String s) {
-		GeoApiContext context = new GeoApiContext().setApiKey(System.getenv("GOOGLE_API_KEY"));
+	public static LatLng getGeometry(String addressString) {
 		try {
-			GeocodingResult[] results = GeocodingApi.geocode(context, s).await();
-			for (int i = 0; i < results.length; i++) {
+			GeocodingApiRequest gar = GeocodingApi.geocode(new GeoApiContext().setApiKey(System.getenv("GOOGLE_API_KEY")),
+							addressString);
+			GeocodingResult[] results = gar.await();
 
-				Geometry geometry = results[i].geometry;
+			if (results.length > 0) {
+				LOGGER.info(results[0].geometry.location.lat + " :: " + results[0].geometry.location.lng);
 
-				System.out.println(i + " : " + geometry.location.lat + " :: " + geometry.location.lng);
+				return results[0].geometry.location;
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error", e);

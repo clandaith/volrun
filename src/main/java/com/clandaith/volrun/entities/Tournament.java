@@ -23,8 +23,8 @@ public class Tournament {
 	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered;
+	@Column(name = "date_added")
+	private Date dateAdded;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_tournament")
@@ -72,12 +72,12 @@ public class Tournament {
 		this.storeId = storeId;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 
 	public Date getDateOfTournament() {

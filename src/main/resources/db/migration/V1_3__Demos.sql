@@ -2,7 +2,7 @@ create table demos(
 	id SERIAL not null primary key ,
 	user_id int not null ,
 	store_id int not null,
-	date_entered  TIMESTAMP NOT NULL,
+	date_added  TIMESTAMP NOT NULL,
 	date_of_demo  DATE NOT NULL,
 	start_time   TIME NOT NULL,
 	end_time   TIME NOT NULL,

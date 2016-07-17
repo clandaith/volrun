@@ -7,11 +7,11 @@ create table stores(
 	state VARCHAR(250) NOT NULL ,
 	zip VARCHAR(250) NOT NULL ,
 	country varchar(250) not null,
-	phonenumber  BIGINT NOT NULL ,
-	date_entered  TIMESTAMP NOT NULL
+	phone_number  BIGINT NOT NULL ,
+	email_address VARCHAR(250) unique  NOT NULL ,
+	date_added  TIMESTAMP NOT NULL
 );
 
 create index stores_store_name on stores(store_name);
 
-
-insert into stores (store_name, address1, address2, city, state, zip, country, phonenumber, date_entered) values ('Random Store', 'Addy 1', 'Addy 2', 'Some City', 'ST', '123 456', 'USA', 8015551212, now());
+insert into stores (store_name, address1, address2, city, state, zip, country, phone_number, date_added, email_address) values ('Random Store', 'Addy 1', 'Addy 2', 'Some City', 'ST', '123 456', 'USA', 8015551212, now(), 'blork@blork.blork');

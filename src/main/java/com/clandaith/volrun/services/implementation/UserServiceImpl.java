@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.clandaith.volrun.entities.User;
+import com.clandaith.volrun.helpers.DistanceHandler;
 import com.clandaith.volrun.helpers.repositories.UserRepository;
 import com.clandaith.volrun.services.UserService;
 import com.google.common.collect.Lists;
+import com.google.maps.model.LatLng;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +40,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User saveUser(User user) {
+		LatLng latLong = DistanceHandler.getGeometry("");
+
+		if (latLong != null) {
+			user.setLatitude(latLong.lat);
+			user.setLatitude(latLong.lng);
+		} else {
+			user.setLatitude(0D);
+			user.setLongitude(0D);
+		}
+
 		return userRepository.save(user);
 	}
 }
