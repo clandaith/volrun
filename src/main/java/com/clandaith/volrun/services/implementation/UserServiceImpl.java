@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.clandaith.volrun.entities.User;
+import com.clandaith.volrun.helpers.AddressFormatter;
 import com.clandaith.volrun.helpers.DistanceHandler;
 import com.clandaith.volrun.helpers.repositories.UserRepository;
 import com.clandaith.volrun.services.UserService;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User saveUser(User user) {
-		LatLng latLong = DistanceHandler.getGeometry("");
+		LatLng latLong = DistanceHandler.getLatLng(AddressFormatter.formatUserAddress(user));
 
 		if (latLong != null) {
 			user.setLatitude(latLong.lat);
