@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,7 +17,9 @@ import javax.persistence.TemporalType;
 public class Store extends Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@OneToOne(mappedBy = "demoStore")
 	private Integer id;
+
 	@Column(name = "store_name")
 	private String storeName;
 
@@ -43,5 +46,4 @@ public class Store extends Address {
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
 	}
-
 }

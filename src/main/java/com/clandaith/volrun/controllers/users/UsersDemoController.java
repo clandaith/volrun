@@ -68,12 +68,23 @@ public class UsersDemoController {
 	public String demoReporter(Model model) {
 		LOGGER.info("demoReport");
 
+		model.addAttribute("userId", getUser().getId());
+		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser().getId()));
+
 		return "users/demoReporter";
 	}
 
 	@RequestMapping("/users/demoreporter/{demoId}")
 	public String demoReporterSpecific(@PathVariable Integer demoId, Model model) {
 		LOGGER.info("demoReport");
+
+		Demo demo = demoService.getDemo(demoId);
+
+		if (demo.getUserId().compareTo(getUser().getId()) == 0) {
+			model.addAttribute("demo", demo);
+		} else {
+
+		}
 
 		return "users/demoReporter";
 	}

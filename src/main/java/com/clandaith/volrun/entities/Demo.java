@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "demos")
@@ -49,7 +50,10 @@ public class Demo {
 
 	private Boolean completed = false;
 
-	@Size(min = 2)
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User userBlork;
+
 	@Column(name = "pre_notes")
 	private String preNotes = "";
 
@@ -58,11 +62,11 @@ public class Demo {
 
 	@Min(0)
 	@Column(name = "number_of_demos")
-	private Integer numberOfDemos = -1;
+	private Integer numberOfDemos = 0;
 
 	@Min(0)
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople = -1;
+	private Integer numberOfPeople = 0;
 
 	@Column(name = "store_response")
 	private String storeResponse = "";
@@ -177,5 +181,13 @@ public class Demo {
 
 	public void setStoreResponse(String storeResponse) {
 		this.storeResponse = storeResponse;
+	}
+
+	public User getUserBlork() {
+		return userBlork;
+	}
+
+	public void setUserBlork(User userBlork) {
+		this.userBlork = userBlork;
 	}
 }

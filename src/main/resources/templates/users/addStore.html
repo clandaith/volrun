@@ -3,26 +3,27 @@
 <head lang="en">
   
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-        <h1>Demo Reporter</h1>
+        <h1>Demo Scheduler</h1>
         
-    <div th:id="${uncompletedDemos != null}">
-		<p th:each="demo : ${uncompletedDemos}" >
-			<a href="#" th:text="${demo.demoStore.storeName}" th:href="@{/users/demoreporter/${demo.id}}">Demo Link</a>
-		</p>
-	</div> 
-    
-    <div th:id="${demo != null}">
-    
-    </div>
-     
-     
+
+storeList
 </div>
 
 <!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
- 
+
+    <script type="text/javascript">
+		$('.clockpicker').clockpicker({
+		    donetext: 'Done',
+		    autoclose: true,
+		    default: '',
+		    twelvehour: true
+		});
+	</script>
+
 </body>
 </html>

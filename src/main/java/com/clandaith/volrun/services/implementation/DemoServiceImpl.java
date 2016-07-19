@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.clandaith.volrun.entities.Demo;
 import com.clandaith.volrun.helpers.repositories.DemoRepository;
 import com.clandaith.volrun.services.DemoService;
+import com.google.common.collect.Lists;
 
 @Service
 public class DemoServiceImpl implements DemoService {
@@ -25,25 +26,31 @@ public class DemoServiceImpl implements DemoService {
 
 	@Override
 	public Demo getDemo(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return demoRepository.findOne(id);
 	}
 
 	@Override
 	public List<Demo> getAllDemos() {
-		// TODO Auto-generated method stub
-		return null;
+		return Lists.newArrayList(demoRepository.findAll());
 	}
 
 	@Override
 	public List<Demo> getAllDemosByUser(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return demoRepository.findAllDemosByUserId(userId);
 	}
 
 	@Override
 	public List<Demo> getAllDemosByStore(Integer storeId) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Demo> getCompletedDemosByUser(Integer userId) {
+		return demoRepository.findCompletedDemosByUserId(userId);
+	}
+
+	@Override
+	public List<Demo> getUncompletedDemosByUser(Integer userId) {
+		return demoRepository.findUncompletedDemosByUserId(userId);
 	}
 }

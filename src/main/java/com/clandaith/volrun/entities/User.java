@@ -1,12 +1,14 @@
 package com.clandaith.volrun.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +42,9 @@ public class User extends Address {
 	private String description;
 
 	private boolean enabled;
+
+	@OneToMany(mappedBy = "userBlork")
+	private List<Demo> demos;
 
 	public Integer getId() {
 		return id;
@@ -119,5 +124,13 @@ public class User extends Address {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public List<Demo> getDemos() {
+		return demos;
+	}
+
+	public void setDemos(List<Demo> demos) {
+		this.demos = demos;
 	}
 }
