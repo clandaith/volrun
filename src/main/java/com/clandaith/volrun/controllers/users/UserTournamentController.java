@@ -112,7 +112,7 @@ public class UserTournamentController extends ControllerHelper {
 
 	@RequestMapping("/reporter/{tournamentId}")
 	public String getSpecificUncompletedTournament(@PathVariable Integer tournamentId, Model model, HttpSession session) {
-		LOGGER.info("getSpecificUncompletedTournament");
+		LOGGER.info("getSpecificUncompletedTournament: " + tournamentId);
 
 		Tournament tournament = tournamentService.getTournament(tournamentId);
 

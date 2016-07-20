@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tournaments")
@@ -21,6 +23,7 @@ public class Tournament {
 	private Integer id;
 	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
+
 	@Column(name = "store_id", insertable = false, updatable = false)
 	private Integer storeId;
 
@@ -28,25 +31,33 @@ public class Tournament {
 	@Column(name = "date_added")
 	private Date dateAdded = new Date();
 
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_event")
 	private Date dateOfEvent;
 
+	@NotNull
 	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
 	private Date startTime;
 
+	@NotNull
 	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
 	private Date endTime;
 
 	private Boolean completed = false;
+
 	@Column(name = "pre_notes")
 	private String preNotes = "";
+
 	@Column(name = "post_notes")
 	private String postNotes = "";
+
+	@Min(0)
 	@Column(name = "number_of_people")
 	private Integer numberOfPeople = 0;
+
 	@Column(name = "store_response")
 	private String storeResponse = "";
 

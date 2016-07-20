@@ -107,7 +107,7 @@ public class UsersDemoController extends ControllerHelper {
 
 	@RequestMapping("/reporter/{demoId}")
 	public String getSpecificUncompletedDemo(@PathVariable Integer demoId, Model model, HttpSession session) {
-		LOGGER.info("getSpecificUncompletedDemo");
+		LOGGER.info("getSpecificUncompletedDemo: " + demoId);
 
 		Demo demo = demoService.getDemo(demoId);
 

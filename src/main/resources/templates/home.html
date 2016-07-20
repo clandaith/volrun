@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-    
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
-    
-    </head>
-    <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
 
-<h1>Welcome!</h1>
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 
-         <div th:if="${param.logout}">
-            <strong>You have been logged out.</strong>
-        </div>
-        
-        <div th:if="${param.requestmembership}">
-            <strong>We've received your request for membership.  Thanks!</strong>
-        </div>
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
-<p>Thanks for your interest in <strong>VOLRUN</strong>.</p>
+		<h1>Welcome!</h1>
 
-<p>What does <strong>VOLRUN</strong> mean?  Absolutly nothing!  I just needed a place holder for the name of this project until it
- has been launched.  The first three letters are related to the final project.  The last three I just selected.</p>
-  
+		<div th:if="${param.logout}">
+			<strong>You have been logged out.</strong>
+		</div>
 
-</div>
+		<div th:if="${param.requestmembership}">
+			<strong>We've received your request for membership. Thanks!</strong>
+		</div>
 
-<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
- 
- 
- 
+		<p>
+			Thanks for your interest in <strong>VOLRUN</strong>.
+		</p>
+
+		<p>
+			What does <strong>VOLRUN</strong> mean? Absolutly nothing! I just
+			needed a place holder for the name of this project until it has been
+			launched. The first three letters are related to the final project.
+			The last three I just selected.
+		</p>
+
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+
+
 </body>
 </html>

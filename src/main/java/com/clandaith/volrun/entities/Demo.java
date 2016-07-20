@@ -25,7 +25,6 @@ public class Demo {
 	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
 
-	@NotNull
 	@Column(name = "store_id", insertable = false, updatable = false)
 	private Integer storeId;
 

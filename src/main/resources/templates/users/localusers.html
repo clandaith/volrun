@@ -1,39 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-  
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-  
-  <h1>Local Users</h1>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
-	<div th:if="${not #lists.isEmpty(users)}">   
-	
-	This will actually filter all users and only show the ones close to the logged in user.
-	     
-        <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Contact User</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.firstName}">First Name</td>
-                <td th:text="${user.lastName}">Last Name</td>
-                <td><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></td>
-            </tr>
-            </tbody>
-        </table>        
+		<h1>Local Users</h1>
+
+		<div th:if="${not #lists.isEmpty(users)}">
+
+			This will actually filter all users and only show the ones close to
+			the logged in user.
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Contact User</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.firstName}">First Name</td>
+						<td th:text="${user.lastName}">Last Name</td>
+						<td><a href="#"><span
+								class="glyphicon glyphicon-envelope"></span></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
- 
-<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
 
 </body>
 </html>
