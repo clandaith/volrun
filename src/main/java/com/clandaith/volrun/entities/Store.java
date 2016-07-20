@@ -1,13 +1,14 @@
 package com.clandaith.volrun.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,7 +18,6 @@ import javax.persistence.TemporalType;
 public class Store extends Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@OneToOne(mappedBy = "demoStore")
 	private Integer id;
 
 	@Column(name = "store_name")
@@ -26,6 +26,12 @@ public class Store extends Address {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_added")
 	private Date dateAdded;
+
+	// @OneToOne(mappedBy = "demoStore")
+	// private Demo demo;
+
+	@OneToMany(mappedBy = "demoStore")
+	private List<Demo> demos;
 
 	public Integer getId() {
 		return id;
@@ -46,4 +52,12 @@ public class Store extends Address {
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
 	}
+
+	// public Demo getDemo() {
+	// return demo;
+	// }
+	//
+	// public void setDemo(Demo demo) {
+	// this.demo = demo;
+	// }
 }

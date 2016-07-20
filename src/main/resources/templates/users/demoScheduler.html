@@ -24,8 +24,7 @@ Please enter the demo information below:
 		            </select>
 		            <a href="#" th:href="@{/users/addstore}">Add Store <span class="glyphicon glyphicon-plus" /></a>
                 </div>
-            </div> 
-                      
+            </div>                       
                         
             <div class="form-group">
                 <label class="col-sm-2 control-label">Date Of Demo:</label>
@@ -52,18 +51,6 @@ Please enter the demo information below:
                     <span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Error</span>
                 </div>
             </div>            
-                    
-<!--                    
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Completed:</label>
-                <div class="col-sm-10">
-                    <input type="checkbox" class="form-control" th:field="*{completed}"></input>
-                    <span th:if="${#fields.hasErrors('completed')}" th:errors="*{completed}">Error</span>
-                </div>
-            </div>            
-    
--->    
                         
             <div class="form-group">
                 <label class="col-sm-2 control-label">Pre Notes:</label>
@@ -72,51 +59,7 @@ Please enter the demo information below:
                     <span th:if="${#fields.hasErrors('preNotes')}" th:errors="*{preNotes}">Error</span>
                 </div>
             </div>            
-                     
-                     
-<!--                     
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Post Notes:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" cols="80"  th:field="*{postNotes}"></textarea>
-                    <span th:if="${#fields.hasErrors('postNotes')}" th:errors="*{postNotes}">Error</span>
-                </div>
-            </div>            
-    
--->    
-         
-<!--                    
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Number of Demos:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{numberOfDemos}"></input>
-                    <span th:if="${#fields.hasErrors('numberOfDemos')}" th:errors="*{numberOfDemos}">Error</span>
-                </div>
-            </div>            
--->            
-                        
-<!--                    
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Number of People:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{numberOfPeople}"></input>
-                    <span th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}">Error</span>
-                </div>
-            </div>          
--->                    
-                        
-<!--                        
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Store Response:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{storeResponse}"></input>
-                    <span th:if="${#fields.hasErrors('storeResponse')}" th:errors="*{storeResponse}">Error</span>
-                </div>
-            </div>           
--->                   
-                        
+            
             <div class="row">
                 <button type="submit" class="btn btn-default">Submit</button>
             </div>

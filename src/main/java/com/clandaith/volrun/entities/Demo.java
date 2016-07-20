@@ -22,12 +22,16 @@ public class Demo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "user_id")
+	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
 
 	@NotNull
-	@Column(name = "store_id")
+	@Column(name = "store_id", insertable = false, updatable = false)
 	private Integer storeId;
+
+	// @OneToOne
+	// @JoinColumn(name = "store_id", insertable = false, updatable = false)
+	// private Store demoStore;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_added")
@@ -52,7 +56,11 @@ public class Demo {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User userBlork;
+	private User demoUser;
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store demoStore;
 
 	@Column(name = "pre_notes")
 	private String preNotes = "";
@@ -183,11 +191,27 @@ public class Demo {
 		this.storeResponse = storeResponse;
 	}
 
-	public User getUserBlork() {
-		return userBlork;
+	public User getDemoUser() {
+		return demoUser;
 	}
 
-	public void setUserBlork(User userBlork) {
-		this.userBlork = userBlork;
+	public void setDemoUser(User demoUser) {
+		this.demoUser = demoUser;
 	}
+
+	public Store getDemoStore() {
+		return demoStore;
+	}
+
+	public void setDemoStore(Store demoStore) {
+		this.demoStore = demoStore;
+	}
+
+	// public Store getDemoStore() {
+	// return demoStore;
+	// }
+	//
+	// public void setDemoStore(Store demoStore) {
+	// this.demoStore = demoStore;
+	// }
 }

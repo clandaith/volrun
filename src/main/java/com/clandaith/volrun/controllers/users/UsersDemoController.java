@@ -25,6 +25,7 @@ import com.clandaith.volrun.services.StoreService;
 import com.clandaith.volrun.services.UserService;
 
 @Controller
+@RequestMapping("/users")
 public class UsersDemoController {
 	private static final Logger LOGGER = Logger.getLogger(UsersDemoController.class);
 
@@ -37,7 +38,7 @@ public class UsersDemoController {
 	@Autowired
 	StoreService storeService;
 
-	@RequestMapping("/users/demoscheduler")
+	@RequestMapping("/demoscheduler")
 	public String demoSchedule(Model model) {
 		LOGGER.info("demoSchedule");
 
@@ -48,9 +49,43 @@ public class UsersDemoController {
 		return "users/demoScheduler";
 	}
 
-	@RequestMapping(value = "/users/demoscheduler", method = RequestMethod.POST)
+	@RequestMapping(value = "/demoscheduler", method = RequestMethod.POST)
 	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult) {
 		LOGGER.info("demoScheduleSaver");
+
+		if (bindingResult.hasErrors()) {
+			LOGGER.info("bindingResult.hasErrors()");
+
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				LOGGER.info(obj.toString());
+			}
+		} else {
+
+			LOGGER.info("store id: " + demo.getStoreId());
+
+			demo.setDemoStore(storeService.getStore(demo.getStoreId()));
+			demo.setDemoUser(getUser());
+			demo.setUserId(getUser().getId());
+			demoService.saveDemo(demo);
+		}
+
+		return "users/demoScheduler";
+	}
+
+	@RequestMapping("/demoreporter")
+	public String demoReporter(Model model) {
+		LOGGER.info("demoReport");
+
+		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser().getId()));
+
+		return "users/demoReporter";
+	}
+
+	@RequestMapping(value = "/demoreporter", method = RequestMethod.POST)
+	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult) {
+		LOGGER.info("saveCompletedDemo");
+
+		LOGGER.info("demo id: " + demo.getId());
 
 		if (bindingResult.hasErrors()) {
 			LOGGER.info("bindingResult.hasErrors()");
@@ -61,26 +96,19 @@ public class UsersDemoController {
 			demoService.saveDemo(demo);
 		}
 
-		return "users/demoScheduler";
-	}
-
-	@RequestMapping("/users/demoreporter")
-	public String demoReporter(Model model) {
-		LOGGER.info("demoReport");
-
-		model.addAttribute("userId", getUser().getId());
-		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser().getId()));
-
 		return "users/demoReporter";
 	}
 
-	@RequestMapping("/users/demoreporter/{demoId}")
+	@RequestMapping("/demoreporter/{demoId}")
 	public String demoReporterSpecific(@PathVariable Integer demoId, Model model) {
 		LOGGER.info("demoReport");
 
 		Demo demo = demoService.getDemo(demoId);
 
 		if (demo.getUserId().compareTo(getUser().getId()) == 0) {
+			// demo.setDemoUser(getUser());
+			// demo.setDemoStore(storeService.getStore(demo.getStoreId()));
+
 			model.addAttribute("demo", demo);
 		} else {
 

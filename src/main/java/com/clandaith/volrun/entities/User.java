@@ -43,7 +43,7 @@ public class User extends Address {
 
 	private boolean enabled;
 
-	@OneToMany(mappedBy = "userBlork")
+	@OneToMany(mappedBy = "demoUser")
 	private List<Demo> demos;
 
 	public Integer getId() {
