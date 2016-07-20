@@ -8,9 +8,58 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
         <h1>Tournament Reporter</h1>
-        
-Members will report their tournaments results here.
+ 
 
+
+    <div th:if="${uncompletedTournaments != null}">
+		<p th:each="tournament : ${uncompletedTournaments}" >
+			<a href="#" th:text="${tournament.tournamentStore.storeName} + ' ' + ${tournament.id}" th:href="@{/users/tournament/reporter/} + ${tournament.id}">tournament Link</a>
+		</p>
+	</div> 
+    
+    <div th:if="${tournament != null}">
+  		<form class="form-horizontal" th:object="${tournament}" th:action="@{/users/tournament/reporter}" method="post">
+            <input type="hidden" id="id" name="id" th:value="${tournament.id}" />
+            <input type="hidden" id="storeId" name="storeId" th:value="${tournament.storeId}" />
+            <input type="hidden" id="userId" name="userId" th:value="${tournament.userId}" />
+  		
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Completed:</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-control" th:field="*{completed}"></input>
+                    <span th:if="${#fields.hasErrors('completed')}" th:errors="*{completed}">Error</span>
+                </div>
+            </div>            
+                        
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Post Notes:</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="4" cols="80"  th:field="*{postNotes}"></textarea>
+                    <span th:if="${#fields.hasErrors('postNotes')}" th:errors="*{postNotes}">Error</span>
+                </div>
+            </div>            
+                                
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Number of People:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{numberOfPeople}"></input>
+                    <span th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}">Error</span>
+                </div>
+            </div>          
+                        
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Store Response:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{storeResponse}"></input>
+                    <span th:if="${#fields.hasErrors('storeResponse')}" th:errors="*{storeResponse}">Error</span>
+                </div>
+            </div>           
+                        
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>      	
+    </div>
 
 </div>
 

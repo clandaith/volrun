@@ -67,31 +67,53 @@ public class UserTournamentController extends ControllerHelper {
 			tournament.setTournamentUser(getUser(session));
 			tournament.setUserId(getUser(session).getId());
 			tournamentService.saveTournament(tournament);
+
+			return "redirect:/users/index?tournamentEntered";
 		}
-		return "users/tournamentScheduler";
 	}
 
-	public String getUsersTournaments(Model model) {
-		LOGGER.info("getUsersTournaments");
+	@RequestMapping("/reporter")
+	public String getUncompletedTournaments(Model model) {
+		LOGGER.info("getUncompletedTournaments");
 
 		List<Tournament> tournaments = tournamentService.getUncompletedTournamentsByUser(getUser().getId());
 		model.addAttribute("userId", getUser().getId());
-		model.addAttribute("tournaments", tournaments);
+		model.addAttribute("uncompletedTournaments", tournaments);
 
 		return "users/tournamentReporter";
 	}
 
-	@RequestMapping(path = "/reporter", method = RequestMethod.PUT)
-	public String saveCompletedTournament(Model model) {
+	@RequestMapping(path = "/reporter", method = RequestMethod.POST)
+	public String saveCompletedTournament(@Valid Tournament tournament, BindingResult bindingResult, Model model,
+					HttpSession session) {
 		LOGGER.info("saveCompletedTournament");
-		// model.addAttribute("users", userService.getAllUsers());
 
-		return "users/tournamentReporter";
+		if (bindingResult.hasErrors()) {
+			LOGGER.info("bindingResult.hasErrors()");
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				LOGGER.info(obj.toString());
+			}
+
+			return "users/tournamentReporter";
+		} else {
+			Tournament originalTournament = (Tournament)session.getAttribute("originalTournament");
+
+			originalTournament.setCompleted(tournament.getCompleted());
+			originalTournament.setPostNotes(tournament.getPostNotes());
+			originalTournament.setNumberOfPeople(tournament.getNumberOfPeople());
+			originalTournament.setStoreResponse(tournament.getStoreResponse());
+
+			tournamentService.saveTournament(originalTournament);
+
+			session.removeAttribute("originalTournament");
+
+			return "redirect:/users/index?tournamentCompleted";
+		}
 	}
 
 	@RequestMapping("/reporter/{tournamentId}")
-	public String getUncompletedTournament(@PathVariable Integer tournamentId, Model model, HttpSession session) {
-		LOGGER.info("getUncompletedTournament");
+	public String getSpecificUncompletedTournament(@PathVariable Integer tournamentId, Model model, HttpSession session) {
+		LOGGER.info("getSpecificUncompletedTournament");
 
 		Tournament tournament = tournamentService.getTournament(tournamentId);
 

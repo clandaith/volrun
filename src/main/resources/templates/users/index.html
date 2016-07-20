@@ -9,9 +9,24 @@
     <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
         <h1>Users</h1>
         
-        Users index
-
-
+        <div th:if="${param.tournamentEntered}">
+            <strong>Your tournament has been scheduled!</strong>
+        </div>
+        
+        
+        <div th:if="${param.tournamentCompleted}">
+            <strong>Your tournament has been completed!</strong>
+        </div>
+        
+        
+        <div th:if="${param.demoEntered}">
+            <strong>Your demo has been scheduled!</strong>
+        </div>
+        
+        
+        <div th:if="${param.demoCompleted}">
+            <strong>Your demo has been completed!</strong>
+        </div>
 
 </div>
 

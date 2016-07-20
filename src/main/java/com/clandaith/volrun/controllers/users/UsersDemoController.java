@@ -30,8 +30,8 @@ public class UsersDemoController extends ControllerHelper {
 	StoreService storeService;
 
 	@RequestMapping("/scheduler")
-	public String demoSchedule(Model model, HttpSession session) {
-		LOGGER.info("demoSchedule");
+	public String buildNewDemo(Model model, HttpSession session) {
+		LOGGER.info("buildNewDemo");
 
 		model.addAttribute("demo", new Demo());
 		model.addAttribute("userId", getUser(session).getId());
@@ -41,8 +41,8 @@ public class UsersDemoController extends ControllerHelper {
 	}
 
 	@RequestMapping(value = "/scheduler", method = RequestMethod.POST)
-	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
-		LOGGER.info("demoScheduleSaver");
+	public String saveNewDemo(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
+		LOGGER.info("saveNewDemo");
 
 		if (bindingResult.hasErrors()) {
 			LOGGER.info("bindingResult.hasErrors()");
@@ -60,14 +60,13 @@ public class UsersDemoController extends ControllerHelper {
 			demo.setDemoUser(getUser(session));
 			demo.setUserId(getUser(session).getId());
 			demoService.saveDemo(demo);
+			return "redirect:/users/index?demoEntered";
 		}
-
-		return "users/demoScheduler";
 	}
 
 	@RequestMapping("/reporter")
-	public String demoReporter(Model model, HttpSession session) {
-		LOGGER.info("demoReport");
+	public String showUncompletedDemos(Model model, HttpSession session) {
+		LOGGER.info("showUncompletedDemos");
 
 		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser(session).getId()));
 
@@ -97,14 +96,13 @@ public class UsersDemoController extends ControllerHelper {
 			demoService.saveDemo(originalDemo);
 
 			session.removeAttribute("originalDemo");
+			return "redirect:/users/index?demoCompleted";
 		}
-
-		return "users/demoReporter";
 	}
 
 	@RequestMapping("/reporter/{demoId}")
-	public String demoReporterSpecific(@PathVariable Integer demoId, Model model, HttpSession session) {
-		LOGGER.info("demoReport");
+	public String getSpecificUncompletedDemo(@PathVariable Integer demoId, Model model, HttpSession session) {
+		LOGGER.info("getSpecificUncompletedDemo");
 
 		Demo demo = demoService.getDemo(demoId);
 
