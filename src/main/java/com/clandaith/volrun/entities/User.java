@@ -46,6 +46,9 @@ public class User extends Address {
 	@OneToMany(mappedBy = "demoUser")
 	private List<Demo> demos;
 
+	@OneToMany(mappedBy = "tournamentUser")
+	private List<Tournament> tournaments;
+
 	public Integer getId() {
 		return id;
 	}
@@ -132,5 +135,13 @@ public class User extends Address {
 
 	public void setDemos(List<Demo> demos) {
 		this.demos = demos;
+	}
+
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
 	}
 }

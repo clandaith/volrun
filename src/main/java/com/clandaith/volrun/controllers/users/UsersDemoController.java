@@ -1,45 +1,35 @@
 package com.clandaith.volrun.controllers.users;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clandaith.volrun.entities.Demo;
-import com.clandaith.volrun.entities.User;
-import com.clandaith.volrun.helpers.LenientDateParser;
+import com.clandaith.volrun.helpers.ControllerHelper;
 import com.clandaith.volrun.services.DemoService;
 import com.clandaith.volrun.services.StoreService;
-import com.clandaith.volrun.services.UserService;
 
 @Controller
-@RequestMapping("/users")
-public class UsersDemoController {
+@RequestMapping("/users/demo")
+public class UsersDemoController extends ControllerHelper {
 	private static final Logger LOGGER = Logger.getLogger(UsersDemoController.class);
 
 	@Autowired
 	DemoService demoService;
 
 	@Autowired
-	UserService userService;
-
-	@Autowired
 	StoreService storeService;
 
-	@RequestMapping("/demoscheduler")
+	@RequestMapping("/scheduler")
 	public String demoSchedule(Model model, HttpSession session) {
 		LOGGER.info("demoSchedule");
 
@@ -50,7 +40,7 @@ public class UsersDemoController {
 		return "users/demoScheduler";
 	}
 
-	@RequestMapping(value = "/demoscheduler", method = RequestMethod.POST)
+	@RequestMapping(value = "/scheduler", method = RequestMethod.POST)
 	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
 		LOGGER.info("demoScheduleSaver");
 
@@ -75,7 +65,7 @@ public class UsersDemoController {
 		return "users/demoScheduler";
 	}
 
-	@RequestMapping("/demoreporter")
+	@RequestMapping("/reporter")
 	public String demoReporter(Model model, HttpSession session) {
 		LOGGER.info("demoReport");
 
@@ -84,7 +74,7 @@ public class UsersDemoController {
 		return "users/demoReporter";
 	}
 
-	@RequestMapping(value = "/demoreporter", method = RequestMethod.POST)
+	@RequestMapping(value = "/reporter", method = RequestMethod.POST)
 	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
 		LOGGER.info("saveCompletedDemo");
 
@@ -112,16 +102,13 @@ public class UsersDemoController {
 		return "users/demoReporter";
 	}
 
-	@RequestMapping("/demoreporter/{demoId}")
+	@RequestMapping("/reporter/{demoId}")
 	public String demoReporterSpecific(@PathVariable Integer demoId, Model model, HttpSession session) {
 		LOGGER.info("demoReport");
 
 		Demo demo = demoService.getDemo(demoId);
 
-		if (demo.getUserId().compareTo(getUser(session).getId()) == 0) {
-			// demo.setDemoUser(getUser());
-			// demo.setDemoStore(storeService.getStore(demo.getStoreId()));
-
+		if (demo.getUserId().equals(getUser(session).getId())) {
 			session.setAttribute("originalDemo", demo);
 			model.addAttribute("demo", demo);
 		} else {
@@ -131,23 +118,4 @@ public class UsersDemoController {
 		return "users/demoReporter";
 	}
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Date.class, new LenientDateParser("yyyy-MM-dd"));
-	}
-
-	private User getUser(HttpSession session) {
-		User user = null;
-		if (session.getAttribute("onlineUser") != null) {
-			user = (User)session.getAttribute("onlineUser");
-			LOGGER.info("User is in the session");
-		} else {
-			user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-			session.setAttribute("onlineUser", user);
-			LOGGER.info("User not in session.  Adding to session.");
-		}
-
-		LOGGER.info("Email address: " + user.getEmailAddress());
-		return user;
-	}
 }

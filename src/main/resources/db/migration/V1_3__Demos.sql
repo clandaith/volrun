@@ -3,7 +3,7 @@ create table demos(
 	user_id int not null ,
 	store_id int not null,
 	date_added  TIMESTAMP NOT NULL,
-	date_of_demo  DATE NOT NULL,
+	date_of_event  DATE NOT NULL,
 	start_time   TIME NOT NULL,
 	end_time   TIME NOT NULL,
 	completed   boolean NOT NULL default 'false',
@@ -16,7 +16,7 @@ create table demos(
 
 create index demos_index_user_id on demos(user_id);
 create index demos_index_store_id on demos(store_id);
-create index demos_index_date_of_demo on demos(date_of_demo);
+create index demos_index_date_of_event on demos(date_of_event);
 create index demos_index_completed on demos(completed);
 
 -- Create Foreign Key: demos_user_id -> users.id

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,18 +19,18 @@ public class Tournament {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "user_id")
+	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
-	@Column(name = "store_id")
+	@Column(name = "store_id", insertable = false, updatable = false)
 	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_added")
-	private Date dateAdded;
+	private Date dateAdded = new Date();
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_tournament")
-	private Date dateOfTournament;
+	@Column(name = "date_of_event")
+	private Date dateOfEvent;
 
 	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
@@ -38,15 +40,23 @@ public class Tournament {
 	@Column(name = "end_time")
 	private Date endTime;
 
-	private Boolean completed;
+	private Boolean completed = false;
 	@Column(name = "pre_notes")
-	private String preNotes;
+	private String preNotes = "";
 	@Column(name = "post_notes")
-	private String postNotes;
+	private String postNotes = "";
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople;
+	private Integer numberOfPeople = 0;
 	@Column(name = "store_response")
-	private String storeResponse;
+	private String storeResponse = "";
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User tournamentUser;
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store tournamentStore;
 
 	public Integer getId() {
 		return id;
@@ -80,12 +90,12 @@ public class Tournament {
 		this.dateAdded = dateAdded;
 	}
 
-	public Date getDateOfTournament() {
-		return dateOfTournament;
+	public Date getDateOfEvent() {
+		return dateOfEvent;
 	}
 
-	public void setDateOfTournament(Date dateOfTournament) {
-		this.dateOfTournament = dateOfTournament;
+	public void setDateOfEvent(Date dateOfEvent) {
+		this.dateOfEvent = dateOfEvent;
 	}
 
 	public Date getStartTime() {
@@ -142,6 +152,22 @@ public class Tournament {
 
 	public void setStoreResponse(String storeResponse) {
 		this.storeResponse = storeResponse;
+	}
+
+	public User getTournamentUser() {
+		return tournamentUser;
+	}
+
+	public void setTournamentUser(User tournamentUser) {
+		this.tournamentUser = tournamentUser;
+	}
+
+	public Store getTournamentStore() {
+		return tournamentStore;
+	}
+
+	public void setTournamentStore(Store tournamentStore) {
+		this.tournamentStore = tournamentStore;
 	}
 
 }

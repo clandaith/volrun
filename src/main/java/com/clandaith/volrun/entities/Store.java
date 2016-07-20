@@ -33,6 +33,9 @@ public class Store extends Address {
 	@OneToMany(mappedBy = "demoStore")
 	private List<Demo> demos;
 
+	@OneToMany(mappedBy = "tournamentStore")
+	private List<Tournament> tournaments;
+
 	public Integer getId() {
 		return id;
 	}
@@ -51,6 +54,22 @@ public class Store extends Address {
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
+	}
+
+	public List<Demo> getDemos() {
+		return demos;
+	}
+
+	public void setDemos(List<Demo> demos) {
+		this.demos = demos;
+	}
+
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
 	}
 
 	// public Demo getDemo() {

@@ -3,25 +3,14 @@ package com.clandaith.volrun.entities;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "demos")
-public class Demo {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
+public class Event {
 	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
 
@@ -78,14 +67,6 @@ public class Demo {
 
 	@Column(name = "store_response")
 	private String storeResponse = "";
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Integer getUserId() {
 		return userId;

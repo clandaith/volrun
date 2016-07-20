@@ -59,16 +59,16 @@
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Demos<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/demoscheduler}">Schedule Demo</a></li>
-          <li><a href="#" th:href="@{/users/demoreporter}">Report on a Demo</a></li>
+          <li><a href="#" th:href="@{/users/demo/scheduler}">Schedule Demo</a></li>
+          <li><a href="#" th:href="@{/users/demo/reporter}">Report on a Demo</a></li>
         </ul>
       </li>
     
       <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/tournamentscheduler}">Schedule a Tournament</a></li>
-          <li><a href="#" th:href="@{/users/tournamentreporter}">Report on a Tournament</a></li>
+          <li><a href="#" th:href="@{/users/tournament/scheduler}">Schedule a Tournament</a></li>
+          <li><a href="#" th:href="@{/users/tournament/reporter}">Report on a Tournament</a></li>
         </ul>
       </li>
       
