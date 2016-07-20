@@ -8,13 +8,19 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
         <h1>Tournament Reporter</h1>
- 
 
-
+    <div th:if="${errorMessage}">
+		<span th:text="${errorMessage}"/>
+	</div> 
+	
     <div th:if="${uncompletedTournaments != null}">
 		<p th:each="tournament : ${uncompletedTournaments}" >
 			<a href="#" th:text="${tournament.tournamentStore.storeName} + ' ' + ${tournament.id}" th:href="@{/users/tournament/reporter/} + ${tournament.id}">tournament Link</a>
 		</p>
+	</div> 
+	
+	<div th:if="${#lists.isEmpty(uncompletedTournaments)}">
+		You have no tournaments to report on.  Schedule a tournament <a href="#" th:href="@{/users/tournament/scheduler}">here</a>.
 	</div> 
     
     <div th:if="${tournament != null}">
@@ -26,32 +32,32 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Completed:</label>
                 <div class="col-sm-10">
-                    <input type="checkbox" class="form-control" th:field="*{completed}"></input>
-                    <span th:if="${#fields.hasErrors('completed')}" th:errors="*{completed}">Error</span>
+                    <input type="checkbox" class="form-control" th:field="*{completed}"/>
+                    <span th:if="${#fields.hasErrors('completed')}" th:errors="*{completed}"/>
                 </div>
             </div>            
                         
             <div class="form-group">
                 <label class="col-sm-2 control-label">Post Notes:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" cols="80"  th:field="*{postNotes}"></textarea>
-                    <span th:if="${#fields.hasErrors('postNotes')}" th:errors="*{postNotes}">Error</span>
+                    <textarea class="form-control" rows="4" cols="80"  th:field="*{postNotes}"/>
+                    <span th:if="${#fields.hasErrors('postNotes')}" th:errors="*{postNotes}"/>
                 </div>
             </div>            
                                 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Number of People:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{numberOfPeople}"></input>
-                    <span th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}">Error</span>
+                    <input type="text" class="form-control" th:field="*{numberOfPeople}"/>
+                    <span th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}"/>
                 </div>
             </div>          
                         
             <div class="form-group">
                 <label class="col-sm-2 control-label">Store Response:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{storeResponse}"></input>
-                    <span th:if="${#fields.hasErrors('storeResponse')}" th:errors="*{storeResponse}">Error</span>
+                    <input type="text" class="form-control" th:field="*{storeResponse}"/>
+                    <span th:if="${#fields.hasErrors('storeResponse')}" th:errors="*{storeResponse}"/>
                 </div>
             </div>           
                         

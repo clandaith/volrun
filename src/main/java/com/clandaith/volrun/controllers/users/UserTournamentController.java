@@ -1,7 +1,5 @@
 package com.clandaith.volrun.controllers.users;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -49,7 +47,7 @@ public class UserTournamentController extends ControllerHelper {
 	}
 
 	@RequestMapping(value = "/scheduler", method = RequestMethod.POST)
-	public String saveNewTournament(@Valid Tournament tournament, BindingResult bindingResult, HttpSession session) {
+	public String saveNewTournament(@Valid Tournament tournament, BindingResult bindingResult, Model model, HttpSession session) {
 		LOGGER.info("saveNewTournament");
 
 		if (bindingResult.hasErrors()) {
@@ -68,6 +66,8 @@ public class UserTournamentController extends ControllerHelper {
 			tournament.setUserId(getUser(session).getId());
 			tournamentService.saveTournament(tournament);
 
+			model.addAttribute("scheduledTournament", tournament);
+
 			return "redirect:/users/index?tournamentEntered";
 		}
 	}
@@ -76,9 +76,7 @@ public class UserTournamentController extends ControllerHelper {
 	public String getUncompletedTournaments(Model model) {
 		LOGGER.info("getUncompletedTournaments");
 
-		List<Tournament> tournaments = tournamentService.getUncompletedTournamentsByUser(getUser().getId());
-		model.addAttribute("userId", getUser().getId());
-		model.addAttribute("uncompletedTournaments", tournaments);
+		model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
 
 		return "users/tournamentReporter";
 	}
@@ -106,6 +104,7 @@ public class UserTournamentController extends ControllerHelper {
 			tournamentService.saveTournament(originalTournament);
 
 			session.removeAttribute("originalTournament");
+			model.addAttribute("completedTournament", originalTournament);
 
 			return "redirect:/users/index?tournamentCompleted";
 		}
@@ -117,11 +116,16 @@ public class UserTournamentController extends ControllerHelper {
 
 		Tournament tournament = tournamentService.getTournament(tournamentId);
 
-		if (tournament.getUserId().equals(getUser().getId())) {
+		if (tournament == null) {
+			model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
+			model.addAttribute("errorMessage", "That tournament doesn't exist.  Please select another tournament.");
+		} else if (tournament.getUserId().equals(getUser().getId())) {
+			tournament.setCompleted(true);
 			session.setAttribute("originalTournament", tournament);
 			model.addAttribute("tournament", tournament);
 		} else {
-
+			model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
+			model.addAttribute("errorMessage", "This tournament wasn't scheduled by you.  Please select another tournament.");
 		}
 
 		return "users/tournamentReporter";

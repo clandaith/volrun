@@ -41,7 +41,7 @@ public class UsersDemoController extends ControllerHelper {
 	}
 
 	@RequestMapping(value = "/scheduler", method = RequestMethod.POST)
-	public String saveNewDemo(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
+	public String saveNewDemo(@Valid Demo demo, BindingResult bindingResult, Model model, HttpSession session) {
 		LOGGER.info("saveNewDemo");
 
 		if (bindingResult.hasErrors()) {
@@ -60,6 +60,9 @@ public class UsersDemoController extends ControllerHelper {
 			demo.setDemoUser(getUser(session));
 			demo.setUserId(getUser(session).getId());
 			demoService.saveDemo(demo);
+
+			model.addAttribute("scheduledDemo", demo);
+
 			return "redirect:/users/index?demoEntered";
 		}
 	}
@@ -74,7 +77,7 @@ public class UsersDemoController extends ControllerHelper {
 	}
 
 	@RequestMapping(value = "/reporter", method = RequestMethod.POST)
-	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
+	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult, Model model, HttpSession session) {
 		LOGGER.info("saveCompletedDemo");
 
 		if (bindingResult.hasErrors()) {
@@ -96,6 +99,8 @@ public class UsersDemoController extends ControllerHelper {
 			demoService.saveDemo(originalDemo);
 
 			session.removeAttribute("originalDemo");
+			model.addAttribute("completedDemo", originalDemo);
+
 			return "redirect:/users/index?demoCompleted";
 		}
 	}
@@ -106,14 +111,18 @@ public class UsersDemoController extends ControllerHelper {
 
 		Demo demo = demoService.getDemo(demoId);
 
-		if (demo.getUserId().equals(getUser(session).getId())) {
+		if (demo == null) {
+			model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser(session).getId()));
+			model.addAttribute("errorMessage", "That demo doesn't exist.  Please select another demo.");
+		} else if (demo.getUserId().equals(getUser(session).getId())) {
+			demo.setCompleted(true);
 			session.setAttribute("originalDemo", demo);
 			model.addAttribute("demo", demo);
 		} else {
-
+			model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser(session).getId()));
+			model.addAttribute("errorMessage", "This demo wasn't scheduled by you.  Please select another demo.");
 		}
 
 		return "users/demoReporter";
 	}
-
 }

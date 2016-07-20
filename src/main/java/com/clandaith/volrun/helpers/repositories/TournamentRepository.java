@@ -12,10 +12,10 @@ public interface TournamentRepository extends CrudRepository<Tournament, Integer
 	@Query("select t from Tournament t where t.userId= :id")
 	public List<Tournament> findAllTournamentsByUserId(@Param("id") Integer id);
 
-	@Query("select t from Tournament t where t.userId= :id")
+	@Query("select t from Tournament t where t.userId= :id and t.completed= true")
 	public List<Tournament> findCompletedTournamentsByUserId(@Param("id") Integer id);
 
-	@Query("select t from Tournament t where t.userId= :id")
+	@Query("select t from Tournament t where t.userId= :id and t.completed= false")
 	public List<Tournament> findUncompletedTournamentsByUserId(@Param("id") Integer id);
 
 	@Query("select t from Tournament t where t.storeId= :id")
