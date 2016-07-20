@@ -11,13 +11,15 @@
         
     <div th:if="${uncompletedDemos != null}">
 		<p th:each="demo : ${uncompletedDemos}" >
-			<a href="#" th:text="${demo.demoStore.storeName}" th:href="@{/users/demoreporter/} + ${demo.id}">Demo Link</a>
+			<a href="#" th:text="${demo.demoStore.storeName} + ' ' + ${demo.id}" th:href="@{/users/demoreporter/} + ${demo.id}">Demo Link</a>
 		</p>
 	</div> 
     
     <div th:if="${demo != null}">
   		<form class="form-horizontal" th:object="${demo}" th:action="@{/users/demoreporter}" method="post">
-            <input type="hidden" id="demoId" name="demoId" th:value="${demo.id}" />
+            <input type="hidden" id="id" name="id" th:value="${demo.id}" />
+            <input type="hidden" id="storeId" name="storeId" th:value="${demo.storeId}" />
+            <input type="hidden" id="userId" name="userId" th:value="${demo.userId}" />
   		
             <div class="form-group">
                 <label class="col-sm-2 control-label">Completed:</label>

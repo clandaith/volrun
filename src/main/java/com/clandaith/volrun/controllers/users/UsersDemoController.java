@@ -2,6 +2,7 @@ package com.clandaith.volrun.controllers.users;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -39,18 +40,18 @@ public class UsersDemoController {
 	StoreService storeService;
 
 	@RequestMapping("/demoscheduler")
-	public String demoSchedule(Model model) {
+	public String demoSchedule(Model model, HttpSession session) {
 		LOGGER.info("demoSchedule");
 
 		model.addAttribute("demo", new Demo());
-		model.addAttribute("userId", getUser().getId());
+		model.addAttribute("userId", getUser(session).getId());
 		model.addAttribute("storeList", storeService.getAll());
 
 		return "users/demoScheduler";
 	}
 
 	@RequestMapping(value = "/demoscheduler", method = RequestMethod.POST)
-	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult) {
+	public String demoScheduleSaver(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
 		LOGGER.info("demoScheduleSaver");
 
 		if (bindingResult.hasErrors()) {
@@ -59,13 +60,15 @@ public class UsersDemoController {
 			for (ObjectError obj : bindingResult.getAllErrors()) {
 				LOGGER.info(obj.toString());
 			}
+
+			return "users/demoScheduler";
 		} else {
 
 			LOGGER.info("store id: " + demo.getStoreId());
 
 			demo.setDemoStore(storeService.getStore(demo.getStoreId()));
-			demo.setDemoUser(getUser());
-			demo.setUserId(getUser().getId());
+			demo.setDemoUser(getUser(session));
+			demo.setUserId(getUser(session).getId());
 			demoService.saveDemo(demo);
 		}
 
@@ -73,42 +76,53 @@ public class UsersDemoController {
 	}
 
 	@RequestMapping("/demoreporter")
-	public String demoReporter(Model model) {
+	public String demoReporter(Model model, HttpSession session) {
 		LOGGER.info("demoReport");
 
-		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser().getId()));
+		model.addAttribute("uncompletedDemos", demoService.getUncompletedDemosByUser(getUser(session).getId()));
 
 		return "users/demoReporter";
 	}
 
 	@RequestMapping(value = "/demoreporter", method = RequestMethod.POST)
-	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult) {
+	public String saveCompletedDemo(@Valid Demo demo, BindingResult bindingResult, HttpSession session) {
 		LOGGER.info("saveCompletedDemo");
-
-		LOGGER.info("demo id: " + demo.getId());
 
 		if (bindingResult.hasErrors()) {
 			LOGGER.info("bindingResult.hasErrors()");
 			for (ObjectError obj : bindingResult.getAllErrors()) {
 				LOGGER.info(obj.toString());
 			}
+
+			return "users/demoReporter";
 		} else {
-			demoService.saveDemo(demo);
+			Demo originalDemo = (Demo)session.getAttribute("originalDemo");
+
+			originalDemo.setCompleted(demo.getCompleted());
+			originalDemo.setPostNotes(demo.getPostNotes());
+			originalDemo.setNumberOfDemos(demo.getNumberOfDemos());
+			originalDemo.setNumberOfPeople(demo.getNumberOfPeople());
+			originalDemo.setStoreResponse(demo.getStoreResponse());
+
+			demoService.saveDemo(originalDemo);
+
+			session.removeAttribute("originalDemo");
 		}
 
 		return "users/demoReporter";
 	}
 
 	@RequestMapping("/demoreporter/{demoId}")
-	public String demoReporterSpecific(@PathVariable Integer demoId, Model model) {
+	public String demoReporterSpecific(@PathVariable Integer demoId, Model model, HttpSession session) {
 		LOGGER.info("demoReport");
 
 		Demo demo = demoService.getDemo(demoId);
 
-		if (demo.getUserId().compareTo(getUser().getId()) == 0) {
+		if (demo.getUserId().compareTo(getUser(session).getId()) == 0) {
 			// demo.setDemoUser(getUser());
 			// demo.setDemoStore(storeService.getStore(demo.getStoreId()));
 
+			session.setAttribute("originalDemo", demo);
 			model.addAttribute("demo", demo);
 		} else {
 
@@ -122,8 +136,17 @@ public class UsersDemoController {
 		binder.registerCustomEditor(Date.class, new LenientDateParser("yyyy-MM-dd"));
 	}
 
-	private User getUser() {
-		User user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+	private User getUser(HttpSession session) {
+		User user = null;
+		if (session.getAttribute("onlineUser") != null) {
+			user = (User)session.getAttribute("onlineUser");
+			LOGGER.info("User is in the session");
+		} else {
+			user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+			session.setAttribute("onlineUser", user);
+			LOGGER.info("User not in session.  Adding to session.");
+		}
+
 		LOGGER.info("Email address: " + user.getEmailAddress());
 		return user;
 	}
