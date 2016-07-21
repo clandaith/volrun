@@ -24,9 +24,9 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 
-							<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
-									Tasks<span class="caret"></span>
+							<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tasks<span
+									class="caret"></span>
 							</a>
 
 								<ul class="dropdown-menu">
@@ -42,10 +42,10 @@
 
 									<li class="divider"></li>
 									<li class="dropdown-submenu1"><a class="test"
-										data-toggle="dropdown" href="#">Demos <span class="caret" /></a>
+										data-toggle="dropdown" href="#">Demos <span class="caret"></span></a>
 										<ul class="dropdown-menu">
-											<li><a href="#" th:href="@{/admin/demorequests}">Store
-													Demo Requests</a></li>
+											<li><a href="#" th:href="@{/admin/demorequests}">Store Demo
+													Requests</a></li>
 											<li><a href="#" th:href="@{/admin/scheduleddemos}">Scheduled
 													Demos</a></li>
 											<li><a href="#" th:href="@{/admin/completeddemos}">Reported
@@ -58,12 +58,9 @@
 									<li><a href="#" th:href="@{/admin/currentmembers}">View
 											Current Members</a></li>
 
-									<li><a href="#" th:href="@{/admin/addviewfiles}">Add/View
-											Files</a></li>
-									<li><a href="#" th:href="@{/admin/sendmessage}">Send
-											Message</a></li>
-								</ul>
-							</li>
+									<li><a href="#" th:href="@{/files/index}">Add/View Files</a></li>
+									<li><a href="#" th:href="@{/admin/sendmessage}">Send Message</a></li>
+								</ul></li>
 
 							<!-- Users menu -->
 
@@ -73,8 +70,8 @@
 								<ul class="dropdown-menu">
 									<li><a href="#" th:href="@{/users/demo/scheduler}">Schedule
 											Demo</a></li>
-									<li><a href="#" th:href="@{/users/demo/reporter}">Report
-											on a Demo</a></li>
+									<li><a href="#" th:href="@{/users/demo/reporter}">Report on a
+											Demo</a></li>
 								</ul></li>
 
 							<li class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a
@@ -87,19 +84,18 @@
 											on a Tournament</a></li>
 								</ul></li>
 
-							<li><a href="#" th:href="@{/users/viewfiles}"
+							<li><a href="#" th:href="@{/files/}"
 								sec:authorize="hasRole('ROLE_USER')">View Files</a></li>
 							<li><a href="#" th:href="@{/users/localusers}"
 								sec:authorize="hasRole('ROLE_USER')">View Local Users</a></li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right"
-							sec:authorize="isAuthenticated()">
+						
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
 							<li><a href="#" th:href="@{/verify_logout}">Logout <span
-									class="glyphicon glyphicon-log-out" /></a></li>
+									class="glyphicon glyphicon-log-out"></span></a></li>
 						</ul>
 
-						<ul class="nav navbar-nav navbar-right"
-							sec:authorize="isAnonymous()">
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
 							<li class="dropdown"><a class="dropdown-toggle"
 								data-toggle="dropdown" href="#">Login <span
 									class="glyphicon glyphicon-log-in"></span></a>
@@ -124,17 +120,17 @@
 									</div>
 								</div></li>
 						</ul>
+						
 					</div>
-
 				</div>
 			</nav>
-
 
 			<div class="jumbotron">
 				<div class="row text-center">
 					<img src="/images/space-header.jpg" />
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </body>

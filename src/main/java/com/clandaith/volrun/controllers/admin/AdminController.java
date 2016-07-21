@@ -1,4 +1,4 @@
-package com.clandaith.volrun.controllers;
+package com.clandaith.volrun.controllers.admin;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

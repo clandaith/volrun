@@ -1,5 +1,6 @@
 package com.clandaith.volrun.services.implementation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,11 @@ public class StoreServiceImpl implements StoreService {
 		LatLng latLong = DistanceHandler.getLatLng(AddressFormatter.formatStoreAddress(store));
 
 		if (latLong != null) {
-			store.setLatitude(latLong.lat);
-			store.setLatitude(latLong.lng);
+			store.setLatitude(new BigDecimal(latLong.lat));
+			store.setLongitude(new BigDecimal(latLong.lng));
 		} else {
-			store.setLatitude(0D);
-			store.setLongitude(0D);
+			store.setLatitude(BigDecimal.ZERO);
+			store.setLongitude(BigDecimal.ZERO);
 		}
 
 		return storeRepository.save(store);

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+
+		<h1>Files</h1>
+
+		<div th:if="${not #lists.isEmpty(files)}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>File Name</th>
+						<th>Description</th>
+						<th>Date Entered</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="file : ${files}">
+						<td th:text="${file.fileName}">
+							<a href="#" >File Name</a>
+							
+							<a href="#" th:text="${demo.demoStore.storeName} + ' ' + ${demo.id}"
+					th:href="@{/users/demo/reporter/} + ${demo.id}">Demo Link</a>
+							
+						</td>
+						<td th:text="${file.description}">Description</td>
+						<td th:text="${file.dateEntered}">Date Entered</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div th:if="${#lists.isEmpty(files)}">There are no files
+			uploaded.</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+</body>
+</html>

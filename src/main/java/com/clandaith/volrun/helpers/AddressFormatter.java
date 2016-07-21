@@ -14,7 +14,7 @@ public class AddressFormatter {
 		builder.append(formatField(store.getAddress2()));
 		builder.append(formatField(store.getCity()));
 		builder.append(formatField(store.getState()));
-		builder.append(formatField(store.getState()));
+		builder.append(formatField(store.getZip()));
 		builder.append(formatField(store.getCountry()));
 
 		LOGGER.info(builder.toString());
@@ -28,7 +28,7 @@ public class AddressFormatter {
 		builder.append(formatField(user.getAddress2()));
 		builder.append(formatField(user.getCity()));
 		builder.append(formatField(user.getState()));
-		builder.append(formatField(user.getState()));
+		builder.append(formatField(user.getZip()));
 		builder.append(formatField(user.getCountry()));
 
 		LOGGER.info(builder.toString());
@@ -37,8 +37,8 @@ public class AddressFormatter {
 	}
 
 	private static String formatField(String field) {
-		if (field != null) {
-			return ", " + field;
+		if (field != null && field.trim().length() > 0) {
+			return ", " + field.trim();
 		} else {
 			return "";
 		}

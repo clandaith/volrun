@@ -8,7 +8,9 @@
 </head>
 <body>
 	<div class="container">
+
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+
 		<h1>Demo Scheduler</h1>
 
 		Please enter the demo information below:
@@ -32,29 +34,27 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Date Of Demo:</label>
 					<div class="col-sm-10">
-						<input type="date" class="form-control" th:field="*{dateOfEvent}" />
-						<span th:if="${#fields.hasErrors('dateOfEvent')}"
-							th:errors="*{dateOfEvent}"></span>
+						<input type="date" class="form-control" th:field="*{dateOfEvent}" /> <span
+							th:if="${#fields.hasErrors('dateOfEvent')}" th:errors="*{dateOfEvent}"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Start Time:</label>
 					<div class="col-sm-10 input-group clockpicker">
-						<input type="text" class="form-control" id="startTime"
-							name="startTime" value="" /> <span class="input-group-addon">
-							<span class="glyphicon glyphicon-time"></span>
-						</span> <span th:if="${#fields.hasErrors('startTime')}"
-							th:errors="*{startTime}"></span>
+						<input type="text" class="form-control" id="startTime" name="startTime"
+							value="" /> <span class="input-group-addon"> <span
+							class="glyphicon glyphicon-time"> </span>
+						</span> <span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-sm-2 control-label">End Time:</label>
 					<div class="col-sm-10 input-group clockpicker">
-						<input type="text" class="form-control" id="endTime"
-							name="endTime" value="" /> <span class="input-group-addon"><span
-							class="glyphicon glyphicon-time"></span></span> <span
+						<input type="text" class="form-control" id="endTime" name="endTime"
+							value="" /> <span class="input-group-addon"><span
+							class="glyphicon glyphicon-time"> </span> </span> <span
 							th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></span>
 					</div>
 				</div>
@@ -62,10 +62,8 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Pre Notes:</label>
 					<div class="col-sm-10">
-						<textarea class="form-control" rows="4" cols="80"
-							th:field="*{preNotes}"></textarea>
-						<span th:if="${#fields.hasErrors('preNotes')}"
-							th:errors="*{preNotes}"></span>
+						<textarea class="form-control" rows="4" cols="80" th:field="*{preNotes}"></textarea>
+						<span th:if="${#fields.hasErrors('preNotes')}" th:errors="*{preNotes}"></span>
 					</div>
 				</div>
 

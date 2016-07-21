@@ -1,5 +1,6 @@
 package com.clandaith.volrun.services.implementation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,11 @@ public class UserServiceImpl implements UserService {
 		LatLng latLong = DistanceHandler.getLatLng(AddressFormatter.formatUserAddress(user));
 
 		if (latLong != null) {
-			user.setLatitude(latLong.lat);
-			user.setLatitude(latLong.lng);
+			user.setLatitude(new BigDecimal(latLong.lat));
+			user.setLongitude(new BigDecimal(latLong.lng));
 		} else {
-			user.setLatitude(0D);
-			user.setLongitude(0D);
+			user.setLatitude(BigDecimal.ZERO);
+			user.setLongitude(BigDecimal.ZERO);
 		}
 
 		return userRepository.save(user);
