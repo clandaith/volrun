@@ -9,7 +9,36 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
+		<div th:if="${message}">
+			<h2 th:text="${message}"></h2>
+		</div>
+
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<h2>File Upload</h2>
+			<form th:action="@{/files/save}" method="post" enctype="multipart/form-data">
+
+				<table>
+					<tr>
+						<td><strong>File to upload:</strong></td>
+						<td><input type="file" name="file" /></td>
+					</tr>
+					<tr>
+						<td><strong>Description:</strong></td>
+						<td><input type="text" name="description"></input></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Upload" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
 		<h1>Files</h1>
+
+		<p></p>
+		<p>+++++++++++++++++++++</p>
+		<p></p>
 
 		<div th:if="${not #lists.isEmpty(files)}">
 			<table class="table table-striped">
@@ -17,27 +46,21 @@
 					<tr>
 						<th>File Name</th>
 						<th>Description</th>
-						<th>Date Entered</th>
+						<th>Date Added</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="file : ${files}">
-						<td th:text="${file.fileName}">
-							<a href="#" >File Name</a>
-							
-							<a href="#" th:text="${demo.demoStore.storeName} + ' ' + ${demo.id}"
-					th:href="@{/users/demo/reporter/} + ${demo.id}">Demo Link</a>
-							
-						</td>
+						<td th:text="${file.fileName}"><a href="#">File Name</a></td>
 						<td th:text="${file.description}">Description</td>
-						<td th:text="${file.dateEntered}">Date Entered</td>
+						<td th:text="${file.dateAdded}">Date Added</td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">Delete File</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div th:if="${#lists.isEmpty(files)}">There are no files
-			uploaded.</div>
+		<div th:if="${#lists.isEmpty(files)}">There are no files uploaded.</div>
 
 	</div>
 

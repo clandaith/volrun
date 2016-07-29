@@ -21,15 +21,17 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public List<File> getAll() {
-		// List<File> files = new ArrayList<>();
-		//
-		// Iterable<File> i = fileRepository.findAll();
-		// if (i != null) {
-		// files.addAll(Lists.newArrayList(i));
-		// }
-		//
-		// return files;
-
 		return Lists.newArrayList(fileRepository.findAll());
+	}
+
+	@Override
+	public File getFile(File file) {
+
+		return null;
+	}
+
+	@Override
+	public File saveFile(File file) {
+		return fileRepository.save(file);
 	}
 }

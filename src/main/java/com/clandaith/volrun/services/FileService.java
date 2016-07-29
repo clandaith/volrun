@@ -8,4 +8,7 @@ public interface FileService {
 
 	List<File> getAll();
 
+	File getFile(File file);
+
+	File saveFile(File file);
 }

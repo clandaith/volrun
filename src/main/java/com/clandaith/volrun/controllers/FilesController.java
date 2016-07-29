@@ -1,20 +1,110 @@
 package com.clandaith.volrun.controllers;
 
+import java.io.IOException;
+import java.util.Date;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.clandaith.volrun.entities.File;
+import com.clandaith.volrun.services.FileService;
 
 @Controller
 @RequestMapping("/files")
 public class FilesController {
 	private static final Logger LOGGER = LogManager.getLogger(FilesController.class);
 
-	@RequestMapping("/")
+	@Autowired
+	private FileService fileService;
+
+	public static final String ROOT = "/tmp";
+
+	private ResourceLoader resourceLoader;
+
+	@RequestMapping("/list")
 	public String listFiles(Model model) {
-		LOGGER.info("we're here");
+		LOGGER.info("listFiles");
+
+		model.addAttribute("files", fileService.getAll());
 
 		return "files/index";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/get/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity< ? > getFile(@PathVariable String filename) {
+		try {
+			return ResponseEntity.ok("file found");
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/save")
+	public String handleFileUpload(@RequestParam("file") MultipartFile uploadedFile,
+					@RequestParam("description") String description, RedirectAttributes redirectAttributes) {
+
+		LOGGER.info("In save: " + uploadedFile.getOriginalFilename() + " :: " + description);
+
+		if (!uploadedFile.isEmpty()) {
+			AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+							System.getenv("AWS_SECRET_ACCESS_KEY")));
+			try {
+				LOGGER.info("Uploading a new object to S3 from a file");
+
+				ObjectMetadata metadata = new ObjectMetadata();
+				metadata.setContentLength(uploadedFile.getSize());
+				metadata.setLastModified(new Date());
+
+				s3client.putObject(new PutObjectRequest(System.getenv("S3_BUCKET_NAME"), uploadedFile.getOriginalFilename(), uploadedFile
+								.getInputStream(), metadata));
+
+				File file = new File();
+				file.setDateAdded(new Date());
+				file.setDescription(description);
+				file.setFileName(uploadedFile.getOriginalFilename());
+				fileService.saveFile(file);
+
+				redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + uploadedFile.getOriginalFilename() + "!");
+			} catch (AmazonServiceException ase) {
+				LOGGER.error("Caught an AmazonServiceException, which means your request made it "
+								+ "to Amazon S3, but was rejected with an error response for some reason.");
+				LOGGER.error("Error Message:    " + ase.getMessage());
+				LOGGER.error("HTTP Status Code: " + ase.getStatusCode());
+				LOGGER.error("AWS Error Code:   " + ase.getErrorCode());
+				LOGGER.error("Error Type:       " + ase.getErrorType());
+				LOGGER.error("Request ID:       " + ase.getRequestId());
+			} catch (AmazonClientException ace) {
+				LOGGER.error("Caught an AmazonClientException, which means the client encountered "
+								+ "an internal error while trying to communicate with S3, such as not being able to access the network.");
+				LOGGER.error("Error Message: " + ace.getMessage());
+			} catch (IOException e) {
+				LOGGER.error("Error: ", e);
+			}
+		} else {
+			redirectAttributes.addFlashAttribute("message", "Failed to upload " + uploadedFile.getOriginalFilename()
+							+ " because it was empty");
+		}
+
+		return "redirect:/files/list";
 	}
 }

@@ -58,7 +58,7 @@
 									<li><a href="#" th:href="@{/admin/currentmembers}">View
 											Current Members</a></li>
 
-									<li><a href="#" th:href="@{/files/index}">Add/View Files</a></li>
+									<li><a href="#" th:href="@{/files/list}">Add/View Files</a></li>
 									<li><a href="#" th:href="@{/admin/sendmessage}">Send Message</a></li>
 								</ul></li>
 
@@ -84,7 +84,7 @@
 											on a Tournament</a></li>
 								</ul></li>
 
-							<li><a href="#" th:href="@{/files/}"
+							<li><a href="#" th:href="@{/files/list}"
 								sec:authorize="hasRole('ROLE_USER')">View Files</a></li>
 							<li><a href="#" th:href="@{/users/localusers}"
 								sec:authorize="hasRole('ROLE_USER')">View Local Users</a></li>
