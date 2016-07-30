@@ -3,18 +3,18 @@ package com.clandaith.volrun.controllers;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,8 +23,10 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.clandaith.volrun.entities.File;
 import com.clandaith.volrun.services.FileService;
 
@@ -36,10 +38,6 @@ public class FilesController {
 	@Autowired
 	private FileService fileService;
 
-	public static final String ROOT = "/tmp";
-
-	private ResourceLoader resourceLoader;
-
 	@RequestMapping("/list")
 	public String listFiles(Model model) {
 		LOGGER.info("listFiles");
@@ -49,13 +47,26 @@ public class FilesController {
 		return "files/index";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/get/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity< ? > getFile(@PathVariable String filename) {
+	@RequestMapping(method = RequestMethod.GET, value = "/get/{id}")
+	public void getFile(@PathVariable Integer id, HttpServletResponse response) {
+
 		try {
-			return ResponseEntity.ok("file found");
+			File fileToDownload = fileService.getFile(id);
+
+			AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+							System.getenv("AWS_SECRET_ACCESS_KEY")));
+
+			S3Object s3Object = s3client.getObject(new GetObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
+							+ fileToDownload.getFileName()));
+
+			response.addHeader("Content-disposition", "attachment;filename=" + fileToDownload.getFileName());
+			response.setContentType("txt/plain");
+
+			IOUtils.copy(s3Object.getObjectContent(), response.getOutputStream());
+			response.flushBuffer();
+
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			LOGGER.error("Error: ", e);
 		}
 	}
 
@@ -75,13 +86,14 @@ public class FilesController {
 				metadata.setContentLength(uploadedFile.getSize());
 				metadata.setLastModified(new Date());
 
-				s3client.putObject(new PutObjectRequest(System.getenv("S3_BUCKET_NAME"), uploadedFile.getOriginalFilename(), uploadedFile
-								.getInputStream(), metadata));
+				s3client.putObject(new PutObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
+								+ uploadedFile.getOriginalFilename(), uploadedFile.getInputStream(), metadata));
 
 				File file = new File();
 				file.setDateAdded(new Date());
 				file.setDescription(description);
 				file.setFileName(uploadedFile.getOriginalFilename());
+				file.setFilePath("DemoCompany/" + file.getFileName());
 				fileService.saveFile(file);
 
 				redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + uploadedFile.getOriginalFilename() + "!");

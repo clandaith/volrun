@@ -21,6 +21,9 @@ public class File {
 	private String fileName;
 	private String description;
 
+	@Column(name = "file_path")
+	private String filePath;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_added")
 	private Date dateAdded;
@@ -55,5 +58,13 @@ public class File {
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

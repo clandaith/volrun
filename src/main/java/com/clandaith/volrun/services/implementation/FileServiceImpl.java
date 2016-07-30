@@ -25,9 +25,8 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public File getFile(File file) {
-
-		return null;
+	public File getFile(Integer id) {
+		return fileRepository.findOne(id);
 	}
 
 	@Override
