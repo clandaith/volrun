@@ -11,6 +11,10 @@ public interface TournamentService {
 
 	public List<Tournament> getAllTournaments();
 
+	public List<Tournament> getAllUncompletedTournaments();
+
+	public List<Tournament> getAllCompletedTournaments();
+
 	public List<Tournament> getAllTournamentsByUser(Integer userId);
 
 	public List<Tournament> getCompletedTournamentsByUser(Integer userId);

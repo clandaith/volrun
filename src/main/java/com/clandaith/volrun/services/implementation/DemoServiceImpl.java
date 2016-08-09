@@ -53,4 +53,14 @@ public class DemoServiceImpl implements DemoService {
 	public List<Demo> getUncompletedDemosByUser(Integer userId) {
 		return demoRepository.findUncompletedDemosByUserId(userId);
 	}
+
+	@Override
+	public List<Demo> getAllUncompletedDemos() {
+		return demoRepository.findAllUncompletedDemos();
+	}
+
+	@Override
+	public List<Demo> getAllCompletedDemos() {
+		return demoRepository.findAllCompletedDemos();
+	}
 }

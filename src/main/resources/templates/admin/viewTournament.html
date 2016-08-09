@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Scheduled/Completed Tournament</h1>
+
+		<div th:if="${tournament != null}">
+			<table class="table table-striped">
+				<tr>
+					<td th:text="'Store:'"></td>
+					<td th:text="${tournament.tournamentStore.storeName}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'tournament Member:'"></td>
+					<td th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}">
+					</td>
+				</tr>
+
+				<tr>
+					<td th:text="'Date/Time:'"></td>
+					<td
+						th:text="${tournament.dateOfEvent}  + ' ' + ${tournament.startTime} + ' - ' + ${tournament.endTime}">
+					</td>
+				</tr>
+
+				<tr>
+					<td th:text="'Completed:'"></td>
+					<td th:text="${tournament.completed}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Pre Notes:'"></td>
+					<td th:text="${tournament.preNotes}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Post Notes:'"></td>
+					<td th:text="${tournament.postNotes}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Number of People:'"></td>
+					<td th:text="${tournament.numberOfPeople}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Store Response:'"></td>
+					<td th:text="${tournament.storeResponse}"></td>
+				</tr>
+			</table>
+		</div>
+
+
+		<div th:if="${tournament == null}">I have no idea how you got here, but you
+			didn't select a tournament!</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+</body>
+</html>
