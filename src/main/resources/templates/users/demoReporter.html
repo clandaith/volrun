@@ -1,18 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-  
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-        <h1>Demo Reporter</h1>
-        
-        Members will post their demo reports here.  This will include things like how many people did they demo to.  How many people did they talk to, but not demo to, etc...
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Demo Reporter</h1>
 
-    <!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
-</div>
- 
+		<div th:if="${errorMessage}">
+			<span th:text="${errorMessage}" />
+		</div>
+
+		<div th:if="${uncompletedDemos != null}">
+			<p th:each="demo : ${uncompletedDemos}">
+				<a href="#" th:text="${demo.demoStore.storeName} + ' ' + ${demo.id}"
+					th:href="@{/users/demo/reporter/} + ${demo.id}">Demo Link</a>
+			</p>
+		</div>
+
+		<div th:if="${#lists.isEmpty(uncompletedDemos)}">
+			You have no demos to report on. Schedule a demo <a href="#"
+				th:href="@{/users/demo/scheduler}">here</a>.
+		</div>
+
+
+		<div th:if="${demo != null}">
+			<form class="form-horizontal" th:object="${demo}"
+				th:action="@{/users/demo/reporter}" method="post">
+				<input type="hidden" id="id" name="id" th:value="${demo.id}" /> <input
+					type="hidden" id="storeId" name="storeId"
+					th:value="${demo.storeId}" /> <input type="hidden" id="userId"
+					name="userId" th:value="${demo.userId}" />
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Completed:</label>
+					<div class="col-sm-10">
+						<input type="checkbox" class="form-control"
+							th:field="*{completed}" /> <span
+							th:if="${#fields.hasErrors('completed')}"
+							th:errors="*{completed}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Post Notes:</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" rows="4" cols="80"
+							th:field="*{postNotes}" />
+						<span th:if="${#fields.hasErrors('postNotes')}"
+							th:errors="*{postNotes}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Number of Demos:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							th:field="*{numberOfDemos}" /> <span
+							th:if="${#fields.hasErrors('numberOfDemos')}"
+							th:errors="*{numberOfDemos}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Number of People:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							th:field="*{numberOfPeople}" /> <span
+							th:if="${#fields.hasErrors('numberOfPeople')}"
+							th:errors="*{numberOfPeople}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Store Response:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							th:field="*{storeResponse}" /> <span
+							th:if="${#fields.hasErrors('storeResponse')}"
+							th:errors="*{storeResponse}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
 </body>
 </html>

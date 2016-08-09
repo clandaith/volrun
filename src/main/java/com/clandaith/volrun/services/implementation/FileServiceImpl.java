@@ -12,9 +12,9 @@ import com.google.common.collect.Lists;
 
 @Service
 public class FileServiceImpl implements FileService {
+	@Autowired
 	private FileRepository fileRepository;
 
-	@Autowired
 	public void setRepository(FileRepository fr) {
 		this.fileRepository = fr;
 	}
@@ -22,5 +22,20 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public List<File> getAll() {
 		return Lists.newArrayList(fileRepository.findAll());
+	}
+
+	@Override
+	public File getFile(Integer id) {
+		return fileRepository.findOne(id);
+	}
+
+	@Override
+	public File saveFile(File file) {
+		return fileRepository.save(file);
+	}
+
+	@Override
+	public void deleteFile(Integer id) {
+		fileRepository.delete(id);
 	}
 }

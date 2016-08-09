@@ -1,120 +1,137 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 
 </head>
 <body>
 
-<div class="container">
-    <div th:fragment="header">
+	<div class="container">
+		<div th:fragment="header">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-  
-    <div class="navbar-header">
-     	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">VOLRUN</a>
-    </div>
-    
-    <div class="collapse navbar-collapse" id="myNavbar">
-    <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-      
-      <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tasks<span class="caret"></span></a>
-     
-        <ul class="dropdown-menu">
-          <li  class="dropdown-submenu1">
-	        <a class="test" href="#">Tournaments <span class="caret"></span></a>
-	        <ul class="dropdown-menu">
-	          <li><a href="#" th:href="@{/admin/scheduledtournaments}">Scheduled Tournaments</a></li>
-	          <li><a href="#" th:href="@{/admin/completedtournaments}">Reported Tournaments</a></li>
-	        </ul>
-	      </li>
-	        
-          <li class="divider"></li>
-	      <li class="dropdown-submenu1">
-	        <a class="test" data-toggle="dropdown" href="#">Demos <span class="caret" /></a>
-	        <ul class="dropdown-menu">
-	          <li><a href="#" th:href="@{/admin/demorequests}">Store Demo Requests</a></li>
-	          <li><a href="#" th:href="@{/admin/scheduleddemos}">Scheduled Demos</a></li>
-	          <li><a href="#" th:href="@{/admin/completeddemos}">Reported Demos</a></li>
-	        </ul>
-	      </li>
-        
-          <li class="divider"></li>
-          <li><a href="#" th:href="@{/admin/membershiprequests}">View Membership Requests</a></li>
-          <li><a href="#" th:href="@{/admin/currentmembers}">View Current Members</a></li>
-          
-          <li><a href="#" th:href="@{/admin/addviewfiles}">Add/View Files</a></li>
-          <li><a href="#" th:href="@{/admin/sendmessage}">Send Message</a></li>
-        </ul>
-      </li>
-    
-    <!-- Users menu -->
-    
-      <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Demos<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/demoscheduler}">Schedule Demo</a></li>
-          <li><a href="#" th:href="@{/users/demoreporter}">Report on a Demo</a></li>
-        </ul>
-      </li>
-    
-      <li class="dropdown" sec:authorize="hasRole('ROLE_USER')">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#" th:href="@{/users/tournamentscheduler}">Schedule a Tournament</a></li>
-          <li><a href="#" th:href="@{/users/tournamentreporter}">Report on a Tournament</a></li>
-        </ul>
-      </li>
-      
-      <li><a href="#" th:href="@{/users/viewfiles}" sec:authorize="hasRole('ROLE_USER')">View Files</a></li>
-      <li><a href="#" th:href="@{/users/localusers}" sec:authorize="hasRole('ROLE_USER')">View Local Users</a></li>
-    </ul>  
-    <ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">  
-      <li><a href="#" th:href="@{/verify_logout}">Logout  <span class="glyphicon glyphicon-log-out" /></a></li>
-    </ul>
-    
-    <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
-  <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <span class="glyphicon glyphicon-log-in"></span></a>
-    <div class="dropdown-menu">
-      <form  th:action="@{/login}" method="post" id="formlogin" class="form container-fluid">
-        <div class="form-group">
-          <label for="usr">Name:</label>
-          <input type="text" class="form-control" id="usr"  name="multipassName"/>
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd"  name="multipassIdent"/>
-        </div>
-          <button type="submit" id="btnLogin" class="btn btn-block">Login</button>
-      </form>
-      <div class="container-fluid">
-        <a class="small" href="/forgotpassword">Forgot password?</a>
-      </div> 
-      <div class="container-fluid">
-        <a class="small" href="/requestmembership">Not a user?</a>
-      </div> 
-    </div>
-  </li>
-</ul>
-    </div>
-    
-  </div>
-</nav>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container-fluid">
 
-    
-        <div class="jumbotron">
-            <div class="row text-center">
-                <img src="/images/space-header.jpg"/>
-            </div> 
-        </div>
-    </div>
-</div>
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#myNavbar">
+							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="/">VOLRUN</a>
+					</div>
+
+					<div class="collapse navbar-collapse" id="myNavbar">
+						<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+
+							<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tasks<span
+									class="caret"></span>
+							</a>
+
+								<ul class="dropdown-menu">
+									<li class="dropdown-submenu1"><a class="test" href="#">Tournaments
+											<span class="caret"></span>
+									</a>
+										<ul class="dropdown-menu">
+											<li><a href="#" th:href="@{/admin/scheduledtournaments}">Scheduled
+													Tournaments</a></li>
+											<li><a href="#" th:href="@{/admin/completedtournaments}">Reported
+													Tournaments</a></li>
+										</ul></li>
+
+									<li class="divider"></li>
+									<li class="dropdown-submenu1"><a class="test"
+										data-toggle="dropdown" href="#">Demos <span class="caret"></span></a>
+										<ul class="dropdown-menu">
+											<li><a href="#" th:href="@{/admin/demorequests}">Store Demo
+													Requests</a></li>
+											<li><a href="#" th:href="@{/admin/scheduleddemos}">Scheduled
+													Demos</a></li>
+											<li><a href="#" th:href="@{/admin/completeddemos}">Reported
+													Demos</a></li>
+										</ul></li>
+
+									<li class="divider"></li>
+									<li><a href="#" th:href="@{/admin/membershiprequests}">View
+											Membership Requests</a></li>
+									<li><a href="#" th:href="@{/admin/currentmembers}">View
+											Current Members</a></li>
+
+									<li><a href="#" th:href="@{/files/list}">Add/View Files</a></li>
+									<li><a href="#" th:href="@{/admin/sendmessage}">Send Message</a></li>
+								</ul></li>
+
+							<!-- Users menu -->
+
+							<li class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Demos<span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#" th:href="@{/users/demo/scheduler}">Schedule
+											Demo</a></li>
+									<li><a href="#" th:href="@{/users/demo/reporter}">Report on a
+											Demo</a></li>
+								</ul></li>
+
+							<li class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments<span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#" th:href="@{/users/tournament/scheduler}">Schedule
+											a Tournament</a></li>
+									<li><a href="#" th:href="@{/users/tournament/reporter}">Report
+											on a Tournament</a></li>
+								</ul></li>
+
+							<li><a href="#" th:href="@{/files/list}"
+								sec:authorize="hasRole('ROLE_USER')">View Files</a></li>
+							<li><a href="#" th:href="@{/users/localusers}"
+								sec:authorize="hasRole('ROLE_USER')">View Local Users</a></li>
+						</ul>
+						
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
+							<li><a href="#" th:href="@{/verify_logout}">Logout <span
+									class="glyphicon glyphicon-log-out"></span></a></li>
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#">Login <span
+									class="glyphicon glyphicon-log-in"></span></a>
+								<div class="dropdown-menu">
+									<form th:action="@{/login}" method="post" id="formlogin"
+										class="form container-fluid">
+										<div class="form-group">
+											<label for="usr">Name:</label> <input type="text"
+												class="form-control" id="usr" name="multipassName" />
+										</div>
+										<div class="form-group">
+											<label for="pwd">Password:</label> <input type="password"
+												class="form-control" id="pwd" name="multipassIdent" />
+										</div>
+										<button type="submit" id="btnLogin" class="btn btn-block">Login</button>
+									</form>
+									<div class="container-fluid">
+										<a class="small" href="/forgotpassword">Forgot password?</a>
+									</div>
+									<div class="container-fluid">
+										<a class="small" href="/requestmembership">Not a user?</a>
+									</div>
+								</div></li>
+						</ul>
+						
+					</div>
+				</div>
+			</nav>
+
+			<div class="jumbotron">
+				<div class="row text-center">
+					<img src="/images/space-header.jpg" />
+				</div>
+			</div>
+			
+		</div>
+	</div>
 </body>
 </html>

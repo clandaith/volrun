@@ -8,4 +8,9 @@ public interface FileService {
 
 	List<File> getAll();
 
+	File getFile(Integer id);
+
+	File saveFile(File file);
+
+	void deleteFile(Integer id);
 }

@@ -1,12 +1,15 @@
 package com.clandaith.volrun.entities;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,12 +29,16 @@ public class User {
 
 	@Column(name = "last_name")
 	private String lastName;
+
 	private String address1;
 	private String address2;
 	private String city;
 	private String state;
 	private String zip;
 	private String country;
+
+	private BigDecimal latitude;
+	private BigDecimal longitude;
 
 	@Column(name = "phone_number")
 	private Long phoneNumber;
@@ -49,6 +56,12 @@ public class User {
 	private String description;
 
 	private boolean enabled;
+
+	@OneToMany(mappedBy = "demoUser")
+	private List<Demo> demos;
+
+	@OneToMany(mappedBy = "tournamentUser")
+	private List<Tournament> tournaments;
 
 	public Integer getId() {
 		return id;
@@ -80,6 +93,70 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public Date getDateAdded() {
+		return dateAdded;
+	}
+
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
+	}
+
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public List<Demo> getDemos() {
+		return demos;
+	}
+
+	public void setDemos(List<Demo> demos) {
+		this.demos = demos;
+	}
+
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
 	}
 
 	public String getAddress1() {
@@ -130,59 +207,27 @@ public class User {
 		this.country = country;
 	}
 
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
+
 	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public Date getDateAdded() {
-		return dateAdded;
-	}
-
-	public void setDateAdded(Date dateAdded) {
-		this.dateAdded = dateAdded;
-	}
-
-	public Date getDateUpdated() {
-		return dateUpdated;
-	}
-
-	public void setDateUpdated(Date dateUpdated) {
-		this.dateUpdated = dateUpdated;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 }

@@ -10,7 +10,13 @@ import com.clandaith.volrun.entities.Demo;
 
 public interface DemoRepository extends CrudRepository<Demo, Integer> {
 	@Query("select d from Demo d where d.userId= :id")
-	public List<Demo> findDemosByUserId(@Param("id") Integer id);
+	public List<Demo> findAllDemosByUserId(@Param("id") Integer id);
+
+	@Query("select d from Demo d where d.userId= :id and d.completed= true")
+	public List<Demo> findCompletedDemosByUserId(@Param("id") Integer id);
+
+	@Query("select d from Demo d where d.userId= :id and d.completed= false")
+	public List<Demo> findUncompletedDemosByUserId(@Param("id") Integer id);
 
 	@Query("select d from Demo d where d.storeId= :id")
 	public List<Demo> findDemosByStoreId(@Param("id") Integer id);

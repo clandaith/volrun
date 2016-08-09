@@ -2,10 +2,10 @@ create table tournaments(
 	id SERIAL not null primary key ,
 	user_id int not null ,
 	store_id int not null,
-	date_entered  TIMESTAMP NOT NULL,
-	date_of_tournament  TIMESTAMP NOT NULL,
-	start_time   TIMESTAMP NOT NULL,
-	end_time   TIMESTAMP NOT NULL,
+	date_added  TIMESTAMP NOT NULL,
+	date_of_event  DATE NOT NULL,
+	start_time   TIME NOT NULL,
+	end_time   TIME NOT NULL,
 	completed   boolean NOT NULL default 'false',
 	pre_notes VARCHAR(4000)  NOT NULL ,
 	post_notes VARCHAR(4000) NOT NULL ,
@@ -15,7 +15,7 @@ create table tournaments(
 
 create index tournaments_index_user_id on tournaments(user_id);
 create index tournaments_index_store_id on tournaments(store_id);
-create index tournaments_index_date_of_demo on tournaments(date_of_tournament);
+create index tournaments_index_date_of_event on tournaments(date_of_event);
 create index tournaments_index_completed on tournaments(completed);
 
 -- Create Foreign Key: tournaments.user_id -> users.id

@@ -1,107 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-  
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-        <h1>Demo Scheduler</h1>
-        
-Members will schedule demos here.  Eventually they can print custom made fliers for the demo.
+	<div class="container">
 
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
- <div>
-            <form class="form-horizontal" th:object="${demo}" th:action="@{/users/demoscheduler}" method="post">
-            <input type="hidden" id="userId" name="userId" th:value="${userId}" />
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Store:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{storeId}"></input>
-                    <span th:if="${#fields.hasErrors('storeId')}" th:errors="*{storeId}">Error</span>
-                </div>
-            </div>           
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Date Of Demo:</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" th:field="*{dateOfDemo}"></input>
-                    <span th:if="${#fields.hasErrors('dateOfDemo')}" th:errors="*{dateOfDemo}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Start Time:</label>
-                <div class="col-sm-10">
-                    <input type="time" class="form-control" th:field="*{startTime}"></input>
-                    <span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">End Time:</label>
-                <div class="col-sm-10">
-                    <input type="time" class="form-control" th:field="*{endTime}"></input>
-                    <span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Completed:</label>
-                <div class="col-sm-10">
-                    <input type="checkbox" class="form-control" th:field="*{completed}"></input>
-                    <span th:if="${#fields.hasErrors('completed')}" th:errors="*{completed}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Pre Notes:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" cols="80"  th:field="*{preNotes}"></textarea>
-                    <span th:if="${#fields.hasErrors('preNotes')}" th:errors="*{preNotes}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Post Notes:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" cols="80"  th:field="*{postNotes}"></textarea>
-                    <span th:if="${#fields.hasErrors('postNotes')}" th:errors="*{postNotes}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Number of Demos:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{numberOfDemos}"></input>
-                    <span th:if="${#fields.hasErrors('numberOfDemos')}" th:errors="*{numberOfDemos}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Number of People:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{numberOfPeople}"></input>
-                    <span th:if="${#fields.hasErrors('numberOfPeople')}" th:errors="*{numberOfPeople}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Store Response:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{storeResponse}"></input>
-                    <span th:if="${#fields.hasErrors('storeResponse')}" th:errors="*{storeResponse}">Error</span>
-                </div>
-            </div>            
-                        
-            <div class="row">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </form>
-    </div>
+		<h1>Demo Scheduler</h1>
 
-</div><!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+		Please enter the demo information below:
+
+		<div>
+			<form class="form-horizontal" th:object="${demo}"
+				th:action="@{/users/demo/scheduler}" method="post">
+				<input type="hidden" id="userId" name="userId" th:value="${userId}" />
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Store:</label>
+					<div class="col-sm-10">
+						<select th:field="*{storeId}">
+							<option th:each="store : ${storeList}" th:value="${store.id}"
+								th:text="${store.storeName}" />
+						</select> <a href="#" th:href="@{/users/addstore}">Add Store <span
+							class="glyphicon glyphicon-plus"></span></a>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Date Of Demo:</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" th:field="*{dateOfEvent}" /> <span
+							th:if="${#fields.hasErrors('dateOfEvent')}" th:errors="*{dateOfEvent}"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Start Time:</label>
+					<div class="col-sm-10 input-group clockpicker">
+						<input type="text" class="form-control" id="startTime" name="startTime"
+							value="" /> <span class="input-group-addon"> <span
+							class="glyphicon glyphicon-time"> </span>
+						</span> <span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">End Time:</label>
+					<div class="col-sm-10 input-group clockpicker">
+						<input type="text" class="form-control" id="endTime" name="endTime"
+							value="" /> <span class="input-group-addon"><span
+							class="glyphicon glyphicon-time"> </span> </span> <span
+							th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Pre Notes:</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" rows="4" cols="80" th:field="*{preNotes}"></textarea>
+						<span th:if="${#fields.hasErrors('preNotes')}" th:errors="*{preNotes}"></span>
+					</div>
+				</div>
+
+				<div class="row">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+	<script type="text/javascript">
+		$('.clockpicker').clockpicker({
+		    donetext: 'Done',
+		    autoclose: true,
+		    default: '',
+		    twelvehour: true
+		});
+	</script>
+
 </body>
 </html>

@@ -1,28 +1,29 @@
 package com.clandaith.volrun.controllers.users;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clandaith.volrun.entities.Tournament;
 import com.clandaith.volrun.entities.User;
+import com.clandaith.volrun.helpers.ControllerHelper;
+import com.clandaith.volrun.services.StoreService;
 import com.clandaith.volrun.services.TournamentService;
 import com.clandaith.volrun.services.UserService;
 
 @Controller
-public class UserTournamentController {
+@RequestMapping("/users/tournament")
+public class UserTournamentController extends ControllerHelper {
 	private static final Logger LOGGER = Logger.getLogger(UserTournamentController.class);
 
 	@Autowired
@@ -31,52 +32,103 @@ public class UserTournamentController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping("/users/tournamentscheduler")
-	public String scheduleTournament(Model model) {
-		LOGGER.info("scheduleTournament");
+	@Autowired
+	StoreService storeService;
+
+	@RequestMapping("/scheduler")
+	public String buildNewTournament(Model model) {
+		LOGGER.info("buildNewTournament");
 
 		model.addAttribute("tournament", new Tournament());
 		model.addAttribute("userId", getUser().getId());
+		model.addAttribute("storeList", storeService.getAll());
 
 		return "users/tournamentScheduler";
 	}
 
-	@RequestMapping(value = "/users/tournamentscheduler", method = RequestMethod.POST)
-	public String saveTournamentSchedule(Tournament tournament, BindingResult bindingResult) {
-		LOGGER.info("saveTournamentSchedule");
-		// model.addAttribute("users", userService.getAllUsers());
+	@RequestMapping(value = "/scheduler", method = RequestMethod.POST)
+	public String saveNewTournament(@Valid Tournament tournament, BindingResult bindingResult, Model model, HttpSession session) {
+		LOGGER.info("saveNewTournament");
 
-		return "users/tournamentScheduler";
+		if (bindingResult.hasErrors()) {
+			LOGGER.info("bindingResult.hasErrors()");
+
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				LOGGER.info(obj.toString());
+			}
+
+			return "users/tournamentScheduler";
+		} else {
+			LOGGER.info("store id: " + tournament.getStoreId());
+
+			tournament.setTournamentStore(storeService.getStore(tournament.getStoreId()));
+			tournament.setTournamentUser(getUser(session));
+			tournament.setUserId(getUser(session).getId());
+			tournamentService.saveTournament(tournament);
+
+			model.addAttribute("scheduledTournament", tournament);
+
+			return "redirect:/users/index?tournamentEntered";
+		}
 	}
 
-	@RequestMapping("/users/tournaments")
-	public String getTournaments(Model model) {
-		LOGGER.info("getTournaments");
-		model.addAttribute("userId", getUser().getId());
+	@RequestMapping("/reporter")
+	public String getUncompletedTournaments(Model model) {
+		LOGGER.info("getUncompletedTournaments");
+
+		model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
 
 		return "users/tournamentReporter";
 	}
 
-	@RequestMapping("/users/tournamentreporter")
-	public String tournamentReport(Model model) {
-		LOGGER.info("tournamentReport");
-		// model.addAttribute("users", userService.getAllUsers());
+	@RequestMapping(path = "/reporter", method = RequestMethod.POST)
+	public String saveCompletedTournament(@Valid Tournament tournament, BindingResult bindingResult, Model model,
+					HttpSession session) {
+		LOGGER.info("saveCompletedTournament");
 
-		return "users/tournamentReporter";
+		if (bindingResult.hasErrors()) {
+			LOGGER.info("bindingResult.hasErrors()");
+			for (ObjectError obj : bindingResult.getAllErrors()) {
+				LOGGER.info(obj.toString());
+			}
+
+			return "users/tournamentReporter";
+		} else {
+			Tournament originalTournament = (Tournament)session.getAttribute("originalTournament");
+
+			originalTournament.setCompleted(tournament.getCompleted());
+			originalTournament.setPostNotes(tournament.getPostNotes());
+			originalTournament.setNumberOfPeople(tournament.getNumberOfPeople());
+			originalTournament.setStoreResponse(tournament.getStoreResponse());
+
+			tournamentService.saveTournament(originalTournament);
+
+			session.removeAttribute("originalTournament");
+			model.addAttribute("completedTournament", originalTournament);
+
+			return "redirect:/users/index?tournamentCompleted";
+		}
 	}
 
-	@RequestMapping("/users/tournamentreporter/{tournamentId}")
-	public String saveTournamentReport(@PathVariable Integer tournamentId, Model model) {
-		LOGGER.info("saveTournamentReport");
-		// model.addAttribute("users", userService.getAllUsers());
+	@RequestMapping("/reporter/{tournamentId}")
+	public String getSpecificUncompletedTournament(@PathVariable Integer tournamentId, Model model, HttpSession session) {
+		LOGGER.info("getSpecificUncompletedTournament: " + tournamentId);
+
+		Tournament tournament = tournamentService.getTournament(tournamentId);
+
+		if (tournament == null) {
+			model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
+			model.addAttribute("errorMessage", "That tournament doesn't exist.  Please select another tournament.");
+		} else if (tournament.getUserId().equals(getUser().getId())) {
+			tournament.setCompleted(true);
+			session.setAttribute("originalTournament", tournament);
+			model.addAttribute("tournament", tournament);
+		} else {
+			model.addAttribute("uncompletedTournaments", tournamentService.getUncompletedTournamentsByUser(getUser().getId()));
+			model.addAttribute("errorMessage", "This tournament wasn't scheduled by you.  Please select another tournament.");
+		}
 
 		return "users/tournamentReporter";
-	}
-
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
-		binder.registerCustomEditor(Date.class, editor);
 	}
 
 	private User getUser() {

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Demo Scheduler</h1>
+
+
+		storeList
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+	<script type="text/javascript">
+		$('.clockpicker').clockpicker({
+		    donetext: 'Done',
+		    autoclose: true,
+		    default: '',
+		    twelvehour: true
+		});
+	</script>
+
+</body>
+</html>

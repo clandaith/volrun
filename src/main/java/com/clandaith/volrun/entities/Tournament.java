@@ -7,46 +7,67 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tournaments")
 public class Tournament {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
-	@Column(name = "user_id")
-	private Integer userId; // int not null ,
-	@Column(name = "store_id")
-	private Integer storeId; // int not null,
+	private Integer id;
+	@Column(name = "user_id", insertable = false, updatable = false)
+	private Integer userId;
+
+	@Column(name = "store_id", insertable = false, updatable = false)
+	private Integer storeId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL,
+	@Column(name = "date_added")
+	private Date dateAdded = new Date();
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_of_tournament")
-	private Date dateOfTournament; // TIMESTAMP NOT NULL,
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_of_event")
+	private Date dateOfEvent;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
-	private Date startTime; // TIMESTAMP NOT NULL,
+	private Date startTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
-	private Date endTime; // TIMESTAMP NOT NULL,
+	private Date endTime;
 
-	private Boolean completed; // boolean NOT NULL default 'false',
+	private Boolean completed = false;
+
 	@Column(name = "pre_notes")
-	private String preNotes; // VARCHAR(4000) NOT NULL ,
+	private String preNotes = "";
+
 	@Column(name = "post_notes")
-	private String postNotes; // VARCHAR(4000) NOT NULL ,
+	private String postNotes = "";
+
+	@Min(0)
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople; // int not null,
+	private Integer numberOfPeople = 0;
+
 	@Column(name = "store_response")
-	private String storeResponse; // VARCHAR(250) NOT NULL
+	private String storeResponse = "";
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User tournamentUser;
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store tournamentStore;
 
 	public Integer getId() {
 		return id;
@@ -72,20 +93,20 @@ public class Tournament {
 		this.storeId = storeId;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 
-	public Date getDateOfTournament() {
-		return dateOfTournament;
+	public Date getDateOfEvent() {
+		return dateOfEvent;
 	}
 
-	public void setDateOfTournament(Date dateOfTournament) {
-		this.dateOfTournament = dateOfTournament;
+	public void setDateOfEvent(Date dateOfEvent) {
+		this.dateOfEvent = dateOfEvent;
 	}
 
 	public Date getStartTime() {
@@ -142,6 +163,22 @@ public class Tournament {
 
 	public void setStoreResponse(String storeResponse) {
 		this.storeResponse = storeResponse;
+	}
+
+	public User getTournamentUser() {
+		return tournamentUser;
+	}
+
+	public void setTournamentUser(User tournamentUser) {
+		this.tournamentUser = tournamentUser;
+	}
+
+	public Store getTournamentStore() {
+		return tournamentStore;
+	}
+
+	public void setTournamentStore(Store tournamentStore) {
+		this.tournamentStore = tournamentStore;
 	}
 
 }

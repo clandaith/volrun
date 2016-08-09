@@ -83,16 +83,21 @@ ALTER TABLE user_roles ADD CONSTRAINT FK_user_roles_username_id FOREIGN KEY (use
 --++++++++++++++++++++++++++++++++++++++++++
 -- Users
 insert into users (username, password, first_name, last_name, address1, address2, city, state, zip, phone_number, country, email_address, description, date_added, date_updated, enabled) values 
-('clandaith', '$2a$04$IsxBaKz3K3VRgRucm3LzKO2DZodMSsidGOmIEQDRrQlreh/vA4UQC', 'Troy', 'Davidson', '1874 S 900 E', '', 'Bountiful', 'UT', '84010', 8016631460, 'USA', 'clandaith@gmail.com', 'desc', now(), now(), 'true');
+('clandaith', '$2a$04$ydsvdKyOpQqYzO68aSdQAub6UIu3rK9HeDk//kvAFzN/x/aospQZm', 'Troy', 'Davidson', '1874 S 900 E', '', 'Bountiful', 'UT', '84010', 8016631460, 'USA', 'clandaith@gmail.com', 'desc', now(), now(), 'true');
 
 insert into users (username, password, first_name, last_name, address1, address2, city, state, zip, phone_number, country, email_address, description, date_added, date_updated, enabled) values 
-('test', '$2a$04$bXho5/ltm.qCttW6F54nROn1zWv4MjoLqWekaWl9U74IaQE4NJR2K', 'Test', 'User', '123 Main St', 'Apt 1', 'NSL', 'UT', '84511', 8015558888, 'USA', 'test@clandaith.com', 'other desc', now(), now(), 'true');
+('test', '$2a$04$9wptsW0gme6Vx1z9lkZjkevm9eSDHoDEXOQ8sJDHGYmHmrbUpb7M.', 'Test', 'User', '123 Main St', 'Apt 1', 'NSL', 'UT', '84511', 8015558888, 'USA', 'test@clandaith.com', 'other desc', now(), now(), 'true');
+
+insert into users (username, password, first_name, last_name, address1, address2, city, state, zip, phone_number, country, email_address, description, date_added, date_updated, enabled) values 
+('andy.hobday', '$2a$04$lhOystfpYBRhJBzk0RyCIe5zMU/CxILyHUYPHD/aFQG8Kx0IYAHKC', 'Andy', 'Hobday', 'T13/T15 Technology Wing', 'The Howitt Building Lenton Business Centre Lenton Boulevard', 'Nottingham', 'UK', 'NG7 2BD', 1159780386, 'UK', 'andy.hobday@warlordgames.com', 'I like games', now(), now(), 'true');
 
 --++++++++++++++++++++++++++++++++++++++++++
 -- User Roles
 INSERT INTO user_roles (username, role) VALUES ('test', 'ROLE_USER');
 INSERT INTO user_roles (username, role) VALUES ('clandaith', 'ROLE_ADMIN');
 INSERT INTO user_roles (username, role) VALUES ('clandaith', 'ROLE_USER');
+INSERT INTO user_roles (username, role) VALUES ('andy.hobday', 'ROLE_ADMIN');
+INSERT INTO user_roles (username, role) VALUES ('andy.hobday', 'ROLE_USER');
 
 --++++++++++++++++++++++++++++++++++++++++++
 -- Game Companies

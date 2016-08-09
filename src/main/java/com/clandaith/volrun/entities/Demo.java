@@ -7,65 +7,76 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "demos")
 public class Demo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
 
-	@Column(name = "user_id")
-	private Integer userId; // int not null ,
+	@Column(name = "user_id", insertable = false, updatable = false)
+	private Integer userId;
 
-	@NotNull
-	@Column(name = "store_id")
-	private Integer storeId; // int not null,
+	@Column(name = "store_id", insertable = false, updatable = false)
+	private Integer storeId;
+
+	// @OneToOne
+	// @JoinColumn(name = "store_id", insertable = false, updatable = false)
+	// private Store demoStore;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered = new Date(); // TIMESTAMP NOT NULL,
+	@Column(name = "date_added")
+	private Date dateAdded = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_of_demo")
-	private Date dateOfDemo = new Date(); // TIMESTAMP NOT NULL,
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_of_event")
+	private Date dateOfEvent = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
-	private Date startTime = new Date(); // TIMESTAMP NOT NULL,
+	private Date startTime = new Date();
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
-	private Date endTime = new Date(); // TIMESTAMP NOT NULL,
+	private Date endTime = new Date();
 
-	private Boolean completed; // boolean NOT NULL default 'false',
+	private Boolean completed = false;
 
-	@Size(min = 2)
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User demoUser;
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store demoStore;
+
 	@Column(name = "pre_notes")
-	private String preNotes; // VARCHAR(4000) NOT NULL ,
+	private String preNotes = "";
 
 	@Column(name = "post_notes")
-	private String postNotes; // VARCHAR(4000) NOT NULL ,
+	private String postNotes = "";
 
 	@Min(0)
 	@Column(name = "number_of_demos")
-	private Integer numberOfDemos; // int not null,
+	private Integer numberOfDemos = 0;
 
 	@Min(0)
 	@Column(name = "number_of_people")
-	private Integer numberOfPeople; // int not null,
+	private Integer numberOfPeople = 0;
 
 	@Column(name = "store_response")
-	private String storeResponse; // VARCHAR(250) NOT NULL
+	private String storeResponse = "";
 
 	public Integer getId() {
 		return id;
@@ -91,24 +102,28 @@ public class Demo {
 		this.storeId = storeId;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 
-	public Date getDateOfDemo() {
-		return dateOfDemo;
+	public Date getDateOfEvent() {
+		return dateOfEvent;
 	}
 
-	public void setDateOfDemo(Date dateOfDemo) {
-		this.dateOfDemo = dateOfDemo;
+	public void setDateOfEvent(Date dateOfEvent) {
+		this.dateOfEvent = dateOfEvent;
 	}
 
 	public Date getStartTime() {
 		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = new Date();
 	}
 
 	public void setStartTime(Date startTime) {
@@ -117,6 +132,10 @@ public class Demo {
 
 	public Date getEndTime() {
 		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = new Date();
 	}
 
 	public void setEndTime(Date endTime) {
@@ -170,4 +189,28 @@ public class Demo {
 	public void setStoreResponse(String storeResponse) {
 		this.storeResponse = storeResponse;
 	}
+
+	public User getDemoUser() {
+		return demoUser;
+	}
+
+	public void setDemoUser(User demoUser) {
+		this.demoUser = demoUser;
+	}
+
+	public Store getDemoStore() {
+		return demoStore;
+	}
+
+	public void setDemoStore(Store demoStore) {
+		this.demoStore = demoStore;
+	}
+
+	// public Store getDemoStore() {
+	// return demoStore;
+	// }
+	//
+	// public void setDemoStore(Store demoStore) {
+	// this.demoStore = demoStore;
+	// }
 }

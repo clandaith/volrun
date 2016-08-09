@@ -1,12 +1,15 @@
 package com.clandaith.volrun.entities;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,20 +19,36 @@ import javax.persistence.TemporalType;
 public class Store {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
+
 	@Column(name = "store_name")
-	private String storeName; // VARCHAR(250) unique NOT NULL ,
-	private String address1; // VARCHAR(250) NOT NULL ,
-	private String address2; // VARCHAR(250) NOT NULL ,
-	private String city; // VARCHAR(250) NOT NULL ,
-	private String state; // VARCHAR(250) NOT NULL ,
-	private String zip; // VARCHAR(250) NOT NULL ,
-	private String country; // varchar(250) not null,
-	private Long phonenumber; // BIGINT NOT NULL ,
+	private String storeName;
+
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String zip;
+	private String country;
+
+	private BigDecimal latitude;
+	private BigDecimal longitude;
+
+	@Column(name = "phone_number")
+	private Long phoneNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL
+	@Column(name = "date_added")
+	private Date dateAdded;
+
+	// @OneToOne(mappedBy = "demoStore")
+	// private Demo demo;
+
+	@OneToMany(mappedBy = "demoStore")
+	private List<Demo> demos;
+
+	@OneToMany(mappedBy = "tournamentStore")
+	private List<Tournament> tournaments;
 
 	public Integer getId() {
 		return id;
@@ -45,6 +64,26 @@ public class Store {
 
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
+	}
+
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
+	}
+
+	public List<Demo> getDemos() {
+		return demos;
+	}
+
+	public void setDemos(List<Demo> demos) {
+		this.demos = demos;
+	}
+
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
 	}
 
 	public String getAddress1() {
@@ -95,20 +134,35 @@ public class Store {
 		this.country = country;
 	}
 
-	public Long getPhonenumber() {
-		return phonenumber;
+	public BigDecimal getLatitude() {
+		return latitude;
 	}
 
-	public void setPhonenumber(Long phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public BigDecimal getLongitude() {
+		return longitude;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
 	}
 
+	public Long getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	// public Demo getDemo() {
+	// return demo;
+	// }
+	//
+	// public void setDemo(Demo demo) {
+	// this.demo = demo;
+	// }
 }

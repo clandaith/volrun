@@ -16,14 +16,20 @@ import javax.persistence.TemporalType;
 public class File {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id; // SERIAL not null primary key ,
+	private Integer id;
 	@Column(name = "file_name")
-	private String fileName; // VARCHAR(250) unique NOT NULL ,
-	private String description; // VARCHAR(250) NOT NULL ,
+	private String fileName;
+	private String description;
+
+	@Column(name = "file_path")
+	private String filePath;
+
+	@Column(name = "file_size")
+	private Long fileSize;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_entered")
-	private Date dateEntered; // TIMESTAMP NOT NULL
+	@Column(name = "date_added")
+	private Date dateAdded;
 
 	public Integer getId() {
 		return id;
@@ -49,11 +55,27 @@ public class File {
 		this.description = description;
 	}
 
-	public Date getDateEntered() {
-		return dateEntered;
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
 	}
 }

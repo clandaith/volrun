@@ -1,19 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-  
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-        <h1>Current Members</h1>
-        
-Page to view all current members
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Current Members</h1>
+
+		Page to view all current members
 
 
-    <!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
-</div>
- 
+		<div th:if="${message}">
+			<h2 th:text="${message}"></h2>
+		</div>
+		
+		<div th:if="${not #lists.isEmpty(users)}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email Address</th>
+						<th>State</th>
+						<th>Country</th>
+						<th>Date Joined</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.firstName} + ' ' + ${user.lastName} "></td>
+						<td th:text="${user.emailAddress}">Description</td>
+						<td th:text="${user.state}">Size</td>
+						<td th:text="${user.country}">Size</td>
+						<td th:text="${user.dateAdded}">Date Added</td>
+						<td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/deleteuser} + '/' + ${user.id}" th:text="'Delete File'"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div th:if="${#lists.isEmpty(users)}">There are no users.  Go recruit some!</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
 </body>
 </html>
