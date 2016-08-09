@@ -18,6 +18,12 @@ public interface DemoRepository extends CrudRepository<Demo, Integer> {
 	@Query("select d from Demo d where d.userId= :id and d.completed= false")
 	public List<Demo> findUncompletedDemosByUserId(@Param("id") Integer id);
 
+	@Query("select d from Demo d where d.completed= false")
+	public List<Demo> findAllUncompletedDemos();
+
+	@Query("select d from Demo d where d.completed= true")
+	public List<Demo> findAllCompletedDemos();
+
 	@Query("select d from Demo d where d.storeId= :id")
 	public List<Demo> findDemosByStoreId(@Param("id") Integer id);
 

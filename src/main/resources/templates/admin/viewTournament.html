@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Scheduled/Completed Tournament</h1>
+
+		<div th:if="${tournament != null}">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Store:</label> <span
+					th:text="${tournament.tournamentStore.storeName}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Demo Member:</label> <span
+					th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Date/Time:</label> <span
+					th:text="${tournament.startTime} + ' - ' + ${tournament.endTime}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Completed:</label> <span
+					th:text="${tournament.completed}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Pre Notes:</label> <span
+					th:text="${tournament.preNotes}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Post Notes:</label> <span
+					th:text="${tournament.postNotes}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Number of People:</label> <span
+					th:text="${tournament.numberOfPeople}"></span>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Store Response:</label> <span
+					th:text="${tournament.storeResponse}"></span>
+			</div>
+		</div>
+
+
+		<div th:if="${tournament == null}">I have no idea how you got here, but
+			you didn't select a tournament</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+</body>
+</html>

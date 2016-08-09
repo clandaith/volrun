@@ -9,8 +9,32 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 		<h1>Scheduled Demos</h1>
+		
+		<div th:if="${#lists.isEmpty(demos)}">
+			There are no scheduled demos.  Go crack the whip and get your demo team moving!
+		</div>
 
-		View all the demos that are scheduled to happen
+		<div th:if="${demos != null}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th th:text="'Store'"></th>
+						<th th:text="'Demo Team'"></th>
+						<th th:text="'Date Of Demo'"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="demo : ${demos}">
+						<td th:text="${demo.demoStore.storeName}"></td>
+						<td th:text="${demo.demoUser.firstName} + ' ' + ${demo.demoUser.lastName}"></td>
+						<td th:text="${demo.dateOfEvent}"></td>
+						<td>
+							<a href="#" th:text="View" th:href="@{/admin/demo/scheduled/} + ${demo.id}">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 
 

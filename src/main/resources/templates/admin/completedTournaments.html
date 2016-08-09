@@ -9,10 +9,32 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 		<h1>Completed Tournaments</h1>
+		
+		<div th:if="${#lists.isEmpty(tournaments)}">
+			There are no completed tournaments.  Go crack the whip and get your demo team moving!
+		</div>
 
-		Page showing completed tournaments
-
-
+		<div th:if="${tournaments != null}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th th:text="'Store'"></th>
+						<th th:text="'Demo Team'"></th>
+						<th th:text="'Date Of Demo'"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="tournament : ${tournaments}">
+						<td th:text="${tournament.tournamentStore.storeName}"></td>
+						<td th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}"></td>
+						<td th:text="${tournament.dateOfEvent}"></td>
+						<td>
+							<a href="#" th:text="View" th:href="@{/admin/tournament/scheduled/} + ${tournament.id}">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
 

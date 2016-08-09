@@ -11,6 +11,10 @@ public interface DemoService {
 
 	public List<Demo> getAllDemos();
 
+	public List<Demo> getAllUncompletedDemos();
+
+	public List<Demo> getAllCompletedDemos();
+
 	public List<Demo> getAllDemosByUser(Integer userId);
 
 	public List<Demo> getCompletedDemosByUser(Integer userId);

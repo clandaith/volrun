@@ -53,4 +53,14 @@ public class TournamentServiceImpl implements TournamentService {
 	public List<Tournament> getAllTournamentsByStore(Integer storeId) {
 		return Lists.newArrayList(tournamentRepository.findTournamentsByStoreId(storeId));
 	}
+
+	@Override
+	public List<Tournament> getAllUncompletedTournaments() {
+		return tournamentRepository.findAllUncompletedTournaments();
+	}
+
+	@Override
+	public List<Tournament> getAllCompletedTournaments() {
+		return tournamentRepository.findAllCompletedTournaments();
+	}
 }

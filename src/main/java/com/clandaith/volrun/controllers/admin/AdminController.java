@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.clandaith.volrun.entities.User;
+import com.clandaith.volrun.services.DemoService;
+import com.clandaith.volrun.services.TournamentService;
 import com.clandaith.volrun.services.UserRoleService;
 import com.clandaith.volrun.services.UserService;
 
@@ -20,28 +22,30 @@ public class AdminController {
 	UserService userService;
 
 	@Autowired
+	DemoService demoService;
+
+	@Autowired
+	TournamentService tournamentService;
+
+	@Autowired
 	UserRoleService userRoleService;
 
 	@RequestMapping("/index")
 	public String index(Model model) {
 		LOGGER.info("index");
-		// model.addAttribute("users", userService.getAllUsers());
-
 		return "admin/index";
 	}
 
 	@RequestMapping("/addviewfiles")
 	public String addViewFiles(Model model) {
 		LOGGER.info("addViewFiles");
-		// model.addAttribute("users", userService.getAllUsers());
-
 		return "admin/addViewFiles";
 	}
 
 	@RequestMapping("/completeddemos")
 	public String completedDemos(Model model) {
 		LOGGER.info("completedDemos");
-		// model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("demos", demoService.getAllUncompletedDemos());
 
 		return "admin/completedDemos";
 	}
@@ -49,7 +53,7 @@ public class AdminController {
 	@RequestMapping("/completedtournaments")
 	public String completedTournaments(Model model) {
 		LOGGER.info("completedTournaments");
-		// model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("tournaments", tournamentService.getAllCompletedTournaments());
 
 		return "admin/completedTournaments";
 	}
@@ -97,6 +101,7 @@ public class AdminController {
 	@RequestMapping("/scheduleddemos")
 	public String scheduledDemos(Model model) {
 		LOGGER.info("scheduledDemos");
+		model.addAttribute("demos", demoService.getAllUncompletedDemos());
 
 		return "admin/scheduledDemos";
 	}
@@ -104,8 +109,25 @@ public class AdminController {
 	@RequestMapping("/scheduledtournaments")
 	public String scheduledTournaments(Model model) {
 		LOGGER.info("scheduledTournaments");
+		model.addAttribute("tournaments", tournamentService.getAllUncompletedTournaments());
 
 		return "admin/scheduledTournaments";
+	}
+
+	@RequestMapping("/tournament/scheduled/{id}")
+	public String scheduledTournament(@PathVariable Integer id, Model model) {
+		LOGGER.info("scheduledTournament");
+		model.addAttribute("tournament", tournamentService.getTournament(id));
+
+		return "admin/viewTournament";
+	}
+
+	@RequestMapping("/demo/scheduled/{id}")
+	public String scheduledDemo(@PathVariable Integer id, Model model) {
+		LOGGER.info("scheduledDemo");
+		model.addAttribute("demo", demoService.getDemo(id));
+
+		return "admin/viewDemo";
 	}
 
 	@RequestMapping("/sendmessage")
