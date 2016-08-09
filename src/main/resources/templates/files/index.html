@@ -46,15 +46,17 @@
 					<tr>
 						<th>File Name</th>
 						<th>Description</th>
+						<th>Size</th>
 						<th>Date Added</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="file : ${files}">
-						<td><a th:href="@{/files/get} + '/' + ${file.id}" th:text="${file.fileName }"></a></td>
+						<td><a th:href="@{/files/download} + '/' + ${file.id}" th:text="${file.fileName }"></a></td>
 						<td th:text="${file.description}">Description</td>
+						<td th:text="(${file.fileSize} / 1024 ) + ' kb'">Size</td>
 						<td th:text="${file.dateAdded}">Date Added</td>
-						<td sec:authorize="hasRole('ROLE_ADMIN')">Delete File</td>
+						<td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/files/remove} + '/' + ${file.id}" th:text="'Delete File'"></a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -23,6 +23,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -47,27 +48,59 @@ public class FilesController {
 		return "files/index";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/get/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/download/{id}")
 	public void getFile(@PathVariable Integer id, HttpServletResponse response) {
+		File fileToDownload = fileService.getFile(id);
 
-		try {
-			File fileToDownload = fileService.getFile(id);
+		if (fileToDownload != null) {
+			try {
+				AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+								System.getenv("AWS_SECRET_ACCESS_KEY")));
 
-			AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
-							System.getenv("AWS_SECRET_ACCESS_KEY")));
+				S3Object s3Object = s3client.getObject(new GetObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
+								+ fileToDownload.getFileName()));
 
-			S3Object s3Object = s3client.getObject(new GetObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
-							+ fileToDownload.getFileName()));
+				response.addHeader("Content-disposition", "attachment;filename=" + fileToDownload.getFileName());
+				response.setContentType("txt/plain");
 
-			response.addHeader("Content-disposition", "attachment;filename=" + fileToDownload.getFileName());
-			response.setContentType("txt/plain");
-
-			IOUtils.copy(s3Object.getObjectContent(), response.getOutputStream());
-			response.flushBuffer();
-
-		} catch (Exception e) {
-			LOGGER.error("Error: ", e);
+				IOUtils.copy(s3Object.getObjectContent(), response.getOutputStream());
+				response.flushBuffer();
+			} catch (Exception e) {
+				LOGGER.error("Error: ", e);
+			}
+		} else {
+			LOGGER.error("File is null");
 		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/remove/{id}")
+	public String deleteFile(@PathVariable Integer id, Model model) {
+		File fileToDelete = fileService.getFile(id);
+
+		if (fileToDelete != null) {
+			LOGGER.info("File to delete: " + fileToDelete.getFileName());
+
+			try {
+				AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+								System.getenv("AWS_SECRET_ACCESS_KEY")));
+
+				s3client.deleteObject(new DeleteObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
+								+ fileToDelete.getFileName()));
+				fileService.deleteFile(id);
+
+				model.addAttribute("files", fileService.getAll());
+				model.addAttribute("message", "You've successfully deleted " + fileToDelete.getFileName() + "!");
+				LOGGER.info("File deleted");
+			} catch (Exception e) {
+				LOGGER.error("Error: ", e);
+				model.addAttribute("message", "There was a problem deleting file " + fileToDelete.getFileName() + ".  Please try again.");
+			}
+		} else {
+			LOGGER.info("File not found");
+			model.addAttribute("message", "That file wasn't found.  Please try again.");
+		}
+
+		return "files/index";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
@@ -90,13 +123,15 @@ public class FilesController {
 								+ uploadedFile.getOriginalFilename(), uploadedFile.getInputStream(), metadata));
 
 				File file = new File();
+				file.setFileSize(uploadedFile.getSize());
 				file.setDateAdded(new Date());
 				file.setDescription(description);
 				file.setFileName(uploadedFile.getOriginalFilename());
 				file.setFilePath("DemoCompany/" + file.getFileName());
 				fileService.saveFile(file);
 
-				redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + uploadedFile.getOriginalFilename() + "!");
+				redirectAttributes.addFlashAttribute("message", "You've successfully uploaded " + uploadedFile.getOriginalFilename()
+								+ "!");
 			} catch (AmazonServiceException ase) {
 				LOGGER.error("Caught an AmazonServiceException, which means your request made it "
 								+ "to Amazon S3, but was rejected with an error response for some reason.");

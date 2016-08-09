@@ -11,4 +11,6 @@ public interface FileService {
 	File getFile(Integer id);
 
 	File saveFile(File file);
+
+	void deleteFile(Integer id);
 }

@@ -4,12 +4,15 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.clandaith.volrun.entities.User;
 import com.clandaith.volrun.services.UserRoleService;
 import com.clandaith.volrun.services.UserService;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 	private static final Logger LOGGER = Logger.getLogger(AdminController.class);
 
@@ -19,7 +22,7 @@ public class AdminController {
 	@Autowired
 	UserRoleService userRoleService;
 
-	@RequestMapping("/admin/index")
+	@RequestMapping("/index")
 	public String index(Model model) {
 		LOGGER.info("index");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -27,7 +30,7 @@ public class AdminController {
 		return "admin/index";
 	}
 
-	@RequestMapping("/admin/addviewfiles")
+	@RequestMapping("/addviewfiles")
 	public String addViewFiles(Model model) {
 		LOGGER.info("addViewFiles");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -35,7 +38,7 @@ public class AdminController {
 		return "admin/addViewFiles";
 	}
 
-	@RequestMapping("/admin/completeddemos")
+	@RequestMapping("/completeddemos")
 	public String completedDemos(Model model) {
 		LOGGER.info("completedDemos");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -43,7 +46,7 @@ public class AdminController {
 		return "admin/completedDemos";
 	}
 
-	@RequestMapping("/admin/completedtournaments")
+	@RequestMapping("/completedtournaments")
 	public String completedTournaments(Model model) {
 		LOGGER.info("completedTournaments");
 		// model.addAttribute("users", userService.getAllUsers());
@@ -51,50 +54,63 @@ public class AdminController {
 		return "admin/completedTournaments";
 	}
 
-	@RequestMapping("/admin/currentmembers")
+	@RequestMapping("/currentmembers")
 	public String currentMembers(Model model) {
 		LOGGER.info("currentMembers");
-		// model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/currentMembers";
 	}
 
-	@RequestMapping("/admin/demorequests")
+	@RequestMapping("/deletemember/{id}")
+	public String deleteMember(@PathVariable Integer id, Model model) {
+		LOGGER.info("deleteMember");
+		User user = userService.getUserById(id);
+		userService.deleteUser(id);
+		model.addAttribute("message", "User " + user.getFirstName() + " " + user.getLastName() + " has been deleted.");
+
+		return "admin/currentMembers";
+	}
+
+	@RequestMapping("/viewmember/{id}")
+	public String viewMember(@PathVariable Integer id, Model model) {
+		LOGGER.info("viewMember");
+		model.addAttribute("", userService.getUserById(id));
+
+		return "admin/currentMembers";
+	}
+
+	@RequestMapping("/demorequests")
 	public String demoRequests(Model model) {
 		LOGGER.info("demoRequests");
-		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/demoRequests";
 	}
 
-	@RequestMapping("/admin/membershiprequests")
+	@RequestMapping("/membershiprequests")
 	public String membershipRequests(Model model) {
 		LOGGER.info("membershipRequests");
-		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/membershipRequests";
 	}
 
-	@RequestMapping("/admin/scheduleddemos")
+	@RequestMapping("/scheduleddemos")
 	public String scheduledDemos(Model model) {
 		LOGGER.info("scheduledDemos");
-		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/scheduledDemos";
 	}
 
-	@RequestMapping("/admin/scheduledtournaments")
+	@RequestMapping("/scheduledtournaments")
 	public String scheduledTournaments(Model model) {
 		LOGGER.info("scheduledTournaments");
-		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/scheduledTournaments";
 	}
 
-	@RequestMapping("/admin/sendmessage")
+	@RequestMapping("/sendmessage")
 	public String sendMessage(Model model) {
 		LOGGER.info("sendMessage");
-		// model.addAttribute("users", userService.getAllUsers());
 
 		return "admin/sendMessage";
 	}

@@ -33,4 +33,9 @@ public class FileServiceImpl implements FileService {
 	public File saveFile(File file) {
 		return fileRepository.save(file);
 	}
+
+	@Override
+	public void deleteFile(Integer id) {
+		fileRepository.delete(id);
+	}
 }
