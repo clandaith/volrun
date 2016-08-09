@@ -11,50 +11,55 @@
 		<h1>Scheduled/Completed Tournament</h1>
 
 		<div th:if="${tournament != null}">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Store:</label> <span
-					th:text="${tournament.tournamentStore.storeName}"></span>
-			</div>
+			<table class="table table-striped">
+				<tr>
+					<td th:text="'Store:'"></td>
+					<td th:text="${tournament.tournamentStore.storeName}"></td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Demo Member:</label> <span
-					th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}"></span>
-			</div>
+				<tr>
+					<td th:text="'tournament Member:'"></td>
+					<td th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}">
+					</td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Date/Time:</label> <span
-					th:text="${tournament.startTime} + ' - ' + ${tournament.endTime}"></span>
-			</div>
+				<tr>
+					<td th:text="'Date/Time:'"></td>
+					<td
+						th:text="${tournament.dateOfEvent}  + ' ' + ${tournament.startTime} + ' - ' + ${tournament.endTime}">
+					</td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Completed:</label> <span
-					th:text="${tournament.completed}"></span>
-			</div>
+				<tr>
+					<td th:text="'Completed:'"></td>
+					<td th:text="${tournament.completed}"></td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Pre Notes:</label> <span
-					th:text="${tournament.preNotes}"></span>
-			</div>
+				<tr>
+					<td th:text="'Pre Notes:'"></td>
+					<td th:text="${tournament.preNotes}"></td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Post Notes:</label> <span
-					th:text="${tournament.postNotes}"></span>
-			</div>
+				<tr>
+					<td th:text="'Post Notes:'"></td>
+					<td th:text="${tournament.postNotes}"></td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Number of People:</label> <span
-					th:text="${tournament.numberOfPeople}"></span>
-			</div>
+				<tr>
+					<td th:text="'Number of People:'"></td>
+					<td th:text="${tournament.numberOfPeople}"></td>
+				</tr>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Store Response:</label> <span
-					th:text="${tournament.storeResponse}"></span>
-			</div>
+				<tr>
+					<td th:text="'Store Response:'"></td>
+					<td th:text="${tournament.storeResponse}"></td>
+				</tr>
+			</table>
 		</div>
 
 
-		<div th:if="${tournament == null}">I have no idea how you got here, but
-			you didn't select a tournament</div>
+		<div th:if="${tournament == null}">I have no idea how you got here, but you
+			didn't select a tournament!</div>
 
 	</div>
 

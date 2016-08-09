@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+		<h1>Scheduled/Completed Demo</h1>
+
+		<div th:if="${demo != null}">
+			<table class="table table-striped">
+				<tr>
+					<td th:text="'Store:'"></td>
+					<td th:text="${demo.demoStore.storeName}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Demo Member:'"></td>
+					<td th:text="${demo.demoUser.firstName} + ' ' + ${demo.demoUser.lastName}">
+					</td>
+				</tr>
+
+				<tr>
+					<td th:text="'Date/Time:'"></td>
+					<td
+						th:text="${demo.dateOfEvent}  + ' ' + ${demo.startTime} + ' - ' + ${demo.endTime}">
+					</td>
+				</tr>
+
+				<tr>
+					<td th:text="'Completed:'"></td>
+					<td th:text="${demo.completed}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Pre Notes:'"></td>
+					<td th:text="${demo.preNotes}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Post Notes:'"></td>
+					<td th:text="${demo.postNotes}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Number of Demos:'"></td>
+					<td th:text="${demo.numberOfDemos}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Number of People:'"></td>
+					<td th:text="${demo.numberOfPeople}"></td>
+				</tr>
+
+				<tr>
+					<td th:text="'Store Response:'"></td>
+					<td th:text="${demo.storeResponse}"></td>
+				</tr>
+			</table>
+		</div>
+
+
+		<div th:if="${demo == null}">I have no idea how you got here, but you
+			didn't select a demo</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+</body>
+</html>

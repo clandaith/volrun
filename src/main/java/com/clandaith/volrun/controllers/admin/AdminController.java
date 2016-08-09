@@ -42,22 +42,6 @@ public class AdminController {
 		return "admin/addViewFiles";
 	}
 
-	@RequestMapping("/completeddemos")
-	public String completedDemos(Model model) {
-		LOGGER.info("completedDemos");
-		model.addAttribute("demos", demoService.getAllUncompletedDemos());
-
-		return "admin/completedDemos";
-	}
-
-	@RequestMapping("/completedtournaments")
-	public String completedTournaments(Model model) {
-		LOGGER.info("completedTournaments");
-		model.addAttribute("tournaments", tournamentService.getAllCompletedTournaments());
-
-		return "admin/completedTournaments";
-	}
-
 	@RequestMapping("/currentmembers")
 	public String currentMembers(Model model) {
 		LOGGER.info("currentMembers");
@@ -102,16 +86,36 @@ public class AdminController {
 	public String scheduledDemos(Model model) {
 		LOGGER.info("scheduledDemos");
 		model.addAttribute("demos", demoService.getAllUncompletedDemos());
+		model.addAttribute("lookupType", "Scheduled");
 
-		return "admin/scheduledDemos";
+		return "admin/demoList";
+	}
+
+	@RequestMapping("/completeddemos")
+	public String completedDemos(Model model) {
+		LOGGER.info("completedDemos");
+		model.addAttribute("demos", demoService.getAllCompletedDemos());
+		model.addAttribute("lookupType", "Completed");
+
+		return "admin/demoList";
+	}
+
+	@RequestMapping("/completedtournaments")
+	public String completedTournaments(Model model) {
+		LOGGER.info("completedTournaments");
+		model.addAttribute("tournaments", tournamentService.getAllCompletedTournaments());
+		model.addAttribute("lookupType", "Completed");
+
+		return "admin/tournamentList";
 	}
 
 	@RequestMapping("/scheduledtournaments")
 	public String scheduledTournaments(Model model) {
 		LOGGER.info("scheduledTournaments");
 		model.addAttribute("tournaments", tournamentService.getAllUncompletedTournaments());
+		model.addAttribute("lookupType", "Scheduled");
 
-		return "admin/scheduledTournaments";
+		return "admin/tournamentList";
 	}
 
 	@RequestMapping("/tournament/scheduled/{id}")

@@ -8,13 +8,13 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-		<h1>Scheduled Demos</h1>
+		<h1 th:text="${lookupType} + ' Tournaments'">Tournaments</h1>
 		
-		<div th:if="${#lists.isEmpty(demos)}">
-			There are no scheduled demos.  Go crack the whip and get your demo team moving!
+		<div th:if="${#lists.isEmpty(tournaments)}">
+			There are no scheduled tournaments.  Go crack the whip and get your demo team moving!
 		</div>
 
-		<div th:if="${demos != null}">
+		<div th:if="${tournaments != null}">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -24,19 +24,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="demo : ${demos}">
-						<td th:text="${demo.demoStore.storeName}"></td>
-						<td th:text="${demo.demoUser.firstName} + ' ' + ${demo.demoUser.lastName}"></td>
-						<td th:text="${demo.dateOfEvent}"></td>
+					<tr th:each="tournament : ${tournaments}">
+						<td th:text="${tournament.tournamentStore.storeName}"></td>
+						<td th:text="${tournament.tournamentUser.firstName} + ' ' + ${tournament.tournamentUser.lastName}"></td>
+						<td th:text="${tournament.dateOfEvent}"></td>
 						<td>
-							<a href="#" th:text="View" th:href="@{/admin/demo/scheduled/} + ${demo.id}">View</a>
+							<a href="#" th:text="View" th:href="@{/admin/tournament/scheduled/} + ${tournament.id}">View</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-
-
 
 	</div>
 
