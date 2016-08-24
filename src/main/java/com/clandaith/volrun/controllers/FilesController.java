@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
@@ -54,8 +55,7 @@ public class FilesController {
 
 		if (fileToDownload != null) {
 			try {
-				AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
-								System.getenv("AWS_SECRET_ACCESS_KEY")));
+				AmazonS3 s3client = new AmazonS3Client(new EnvironmentVariableCredentialsProvider());
 
 				S3Object s3Object = s3client.getObject(new GetObjectRequest(System.getenv("S3_BUCKET_NAME"), "DemoCompany/"
 								+ fileToDownload.getFileName()));
